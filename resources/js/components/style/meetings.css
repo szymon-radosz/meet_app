@@ -1,0 +1,19 @@
+.listOfMeetingsRow .listOfMeetingsCol {
+  padding: 20px; }
+  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn {
+    background-color: #92adaf;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700; }
+  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn:hover {
+    background-color: #749799;
+    transition-duration: 0.5s; }
+  .listOfMeetingsRow .listOfMeetingsCol .locateBtn {
+    background-color: #dedbdc;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 10px; }
+  .listOfMeetingsRow .listOfMeetingsCol .locateBtn:hover {
+    background-color: #cac3c5;
+    transition-duration: 0.5s; }

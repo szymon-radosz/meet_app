@@ -1,0 +1,135 @@
+.listOfMeetingsCol,
+.singleMeetingDetailsDataCol {
+  height: calc(100vh - 60px);
+  overflow-y: scroll; }
+
+.bold {
+  font-weight: 700; }
+
+.row {
+  margin: 0 !important; }
+
+.listOfMeetingsRow,
+.navbar,
+.singleMeetingDetailsDataRow {
+  margin: 0 !important; }
+
+.navbar {
+  background-color: #fff !important; }
+  .navbar .dropdown {
+    margin: 9px; }
+    .navbar .dropdown .dropdown-toggle {
+      background-color: #dedbdb;
+      border: none; }
+    .navbar .dropdown .dropdown-menu {
+      padding: 15px;
+      min-width: 120px; }
+      .navbar .dropdown .dropdown-menu a {
+        display: block;
+        color: #333;
+        text-align: right; }
+      .navbar .dropdown .dropdown-menu a:hover {
+        cursor: pointer;
+        text-decoration: none;
+        color: #000; }
+
+* {
+  font-family: "Open Sans", sans-serif !important; }
+
+textarea:focus,
+.form-control:focus,
+button:focus,
+select:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: rgba(202, 201, 201, 0.8) !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(202, 201, 201, 0.8) !important;
+  outline: 0 none !important; }
+
+.landing {
+  margin: 0 !important;
+  height: calc(100vh - 52px);
+  background: url("./images/main.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+  .landing .landingForm {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    padding: 30px;
+    position: relative;
+    top: 25%;
+    transform: translateY(-25%); }
+    .landing .landingForm h1 {
+      margin: 0;
+      padding: 0 0 15px 0;
+      font-size: 24px;
+      font-weight: 700; }
+    .landing .landingForm .landingBtn {
+      color: #fff;
+      background-color: #c78177;
+      padding: 10px 30px;
+      font-weight: 700;
+      font-size: 16px; }
+    .landing .landingForm .landingBtn:hover {
+      background-color: #d6998f;
+      transition-duration: 1s; }
+
+.listOfMeetingsRow .listOfMeetingsCol {
+  padding: 20px; }
+  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn {
+    background-color: #92adaf;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700; }
+  .listOfMeetingsRow .listOfMeetingsCol .meetingDetailsBtn:hover {
+    background-color: #749799;
+    transition-duration: 0.5s; }
+  .listOfMeetingsRow .listOfMeetingsCol .locateBtn {
+    background-color: #dedbdc;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 10px; }
+  .listOfMeetingsRow .listOfMeetingsCol .locateBtn:hover {
+    background-color: #cac3c5;
+    transition-duration: 0.5s; }
+
+.App {
+  text-align: center; }
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px; }
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white; }
+
+.App-title {
+  font-size: 1.5em; }
+
+.App-intro {
+  font-size: large; }
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }

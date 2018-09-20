@@ -1,0 +1,60 @@
+.listOfMeetingsCol,
+.singleMeetingDetailsDataCol {
+  height: calc(100vh - 60px);
+  overflow-y: scroll; }
+
+.bold {
+  font-weight: 700; }
+
+.row {
+  margin: 0 !important; }
+
+.listOfMeetingsRow,
+.navbar,
+.singleMeetingDetailsDataRow {
+  margin: 0 !important; }
+
+.navbar {
+  background-color: #fff !important; }
+  .navbar .dropdown {
+    margin: 9px; }
+    .navbar .dropdown .dropdown-toggle {
+      background-color: #dedbdb;
+      border: none; }
+    .navbar .dropdown .dropdown-menu {
+      padding: 15px;
+      min-width: 120px; }
+      .navbar .dropdown .dropdown-menu a {
+        display: block;
+        color: #333;
+        text-align: right; }
+      .navbar .dropdown .dropdown-menu a:hover {
+        cursor: pointer;
+        text-decoration: none;
+        color: #000; }
+
+* {
+  font-family: "Open Sans", sans-serif !important; }
+
+textarea:focus,
+.form-control:focus,
+button:focus,
+select:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: rgba(202, 201, 201, 0.8) !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(202, 201, 201, 0.8) !important;
+  outline: 0 none !important; }
