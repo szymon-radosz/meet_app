@@ -21,9 +21,6 @@ class LocateOnMapBtn extends Component {
         const nickname = this.props.match.params.nickname;
         const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
-        console.log(allUsers.data);
-
-        //check all record that contains user id
         for (var i = 0; i < allUsers.data.length; i++) {
             if (_.contains(allUsers.data[i], nickname)) {
                 this.setState({

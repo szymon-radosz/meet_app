@@ -12,7 +12,7 @@ class TakePartController extends Controller
 {
     public function index()
     {
-        $allTakePart = DB::table('takePart')->get();
+        $allTakePart = DB::table('take_part')->get();
         return $allTakePart;
     }
 
@@ -28,7 +28,7 @@ class TakePartController extends Controller
 
     public function findById($id)
     {
-        $singleTakePart = DB::table('takePart')->where('id', $id)->get();
+        $singleTakePart = DB::table('take_part')->where('id', $id)->get();
         return $singleTakePart;
     }
 }

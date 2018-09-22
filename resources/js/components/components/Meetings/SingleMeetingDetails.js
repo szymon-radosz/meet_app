@@ -26,7 +26,6 @@ class SingleMeetingDetails extends Component {
         this.resignClick = this.resignClick.bind(this);
     }
 
-    //when user pass data to textearea field then update state
     handleChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
@@ -34,37 +33,28 @@ class SingleMeetingDetails extends Component {
 
     async componentDidMount() {
         const getUser = await axios.get(
-            `http://127.0.0.1:8000/api/${sessionStorage.getItem("userId")}`
+            `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
         );
 
         this.setState({ loggedInUserEmail: getUser.data.email });
         this.setState({ loggedInUserNickname: getUser.data.nickName });
 
-        //get meeting user limit
         const getCurrentMeetingInfo = await axios.get(
-            `http://127.0.0.1:8000/api/meetings/${this.props.meetingId}`
+            `http://127.0.0.1:8000/api/meeting/${this.props.meetingId}`
         );
         let meetingLimit = getCurrentMeetingInfo.data.limit;
 
-        //we add users ids, which take part in meeting
         let usersIDs = [];
 
-        //search through all matches in db
         const allMatches = await axios.get(
-            `http://127.0.0.1:8000/api/matchUserWithMeeting`
+            `http://127.0.0.1:8000/api/matchUserWithMeetings`
         );
 
-        //store meeting matches
-        //how many times matchUSerWithMeeting consist meeting with current id
         let meetingMatched = 0;
 
-        //check all record that contains meeting id
         for (var i = 0; i < allMatches.data.length; i++) {
             if (_.contains(allMatches.data[i], this.props.meetingId)) {
-                //for actual meeting id push user id to array
                 usersIDs.push(allMatches.data[i].userID);
-
-                // console.log(allMatches.data[i].userID);
 
                 meetingMatched++;
 
@@ -75,30 +65,21 @@ class SingleMeetingDetails extends Component {
                     ) &&
                     this.state.loggedInUserEmail != getCurrentMeetingInfo.author
                 ) {
-                    //if user took part in the meeting
                     this.setState({ displayCommentsContainer: true });
                     this.setState({ displayResignBtn: true });
                 }
             }
         }
 
-        //if meeting is show in table with matches < meeting limit, than display button 'take part'
         if (meetingMatched < meetingLimit) {
             this.setState({ displayTakPartBtn: true });
         }
 
-        //loop through all users which take part in meeting
         usersIDs.map(async (userID, i) => {
-            //console.log(userID);
+            const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
-            //search through all users in db
-            const allUsers = await axios.get(`http://127.0.0.1:8000/api`);
-
-            //check all record that contains user id
             for (var i = 0; i < allUsers.data.length; i++) {
                 if (_.contains(allUsers.data[i], userID)) {
-                    //console.log(allUsers.data[i].email);
-
                     let userObject = {
                         email: allUsers.data[i].email,
                         id: allUsers.data[i].id
@@ -111,17 +92,14 @@ class SingleMeetingDetails extends Component {
             }
         });
 
-        //we add users which resigned
         let ResignedUsersIDs = [];
 
         const allDeleted = await axios.get(
             `http://127.0.0.1:8000/api/deleteUserFromMeeting`
         );
 
-        //check all record that contains meeting id
         for (var i = 0; i < allDeleted.data.length; i++) {
             if (_.contains(allDeleted.data[i], this.props.meetingId)) {
-                //for actual meeting id push user id to array
                 if (!_.contains(ResignedUsersIDs, allDeleted.data[i].userID)) {
                     ResignedUsersIDs.push(allDeleted.data[i].userID);
                 }
@@ -130,13 +108,9 @@ class SingleMeetingDetails extends Component {
             }
         }
 
-        //loop through all users which resigned
         ResignedUsersIDs.map(async (userID, i) => {
-            //console.log(userID);
-
-            //search through all users in db
             const allUsers = await axios.get(
-                `http://127.0.0.1:8000/api/${userID}`
+                `http://127.0.0.1:8000/api/user/${userID}`
             );
 
             let userObject = {
@@ -152,12 +126,10 @@ class SingleMeetingDetails extends Component {
             }));
         });
 
-        //get comments
         const allComments = await axios.get(
             `http://127.0.0.1:8000/api/comments?results=1`
         );
 
-        //loop through all comments
         for (var i = 0; i < allComments.data.length; i++) {
             if (allComments.data[i].meetingId == this.props.meetingId) {
                 let commentObject = {
@@ -167,8 +139,6 @@ class SingleMeetingDetails extends Component {
                     commentBody: allComments.data[i].commentBody
                 };
 
-                //console.log(commentObject);
-
                 this.setState(prevState => ({
                     comments: [...prevState.comments, commentObject]
                 }));
@@ -177,18 +147,12 @@ class SingleMeetingDetails extends Component {
     }
 
     async takePartClick() {
-        //console.log('take');
-
-        //on the start I think the user take part in the past
-        //in next code I will check it
         let takePart = true;
 
-        //search through all matches in db
         const allMatches = await axios.get(
             `http://127.0.0.1:8000/api/matchUserWithMeeting`
         );
 
-        //check all record that contains email and meeting id, if it's exists then change takePart to false
         for (var i = 0; i < allMatches.data.length; i++) {
             if (
                 _.contains(
@@ -201,46 +165,21 @@ class SingleMeetingDetails extends Component {
             }
         }
 
-        //if takePart is not unique then display alert
         if (takePart === false) {
             alert(
                 "user with email " +
                     this.state.loggedInUserEmail +
                     " took part in the past!"
             );
-        }
-
-        //if takePart is unique then try match user with meeting
-        else {
-            //create match object
-            const matchUserWithMeeting = {
-                userID: sessionStorage.getItem("userId"),
-                meetingID: this.props.meetingId
-            };
-
-            //x-www-form
-            let formBody = [];
-            for (let property in matchUserWithMeeting) {
-                let encodedKey = encodeURIComponent(property);
-                let encodedValue = encodeURIComponent(
-                    matchUserWithMeeting[property]
-                );
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-
-            formBody = formBody.join("&");
-
+        } else {
             const savedMatchUserWithMeeting = await axios.post(
                 `http://127.0.0.1:8000/api/matchUserWithMeeting`,
-                formBody,
                 {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    }
+                    userID: sessionStorage.getItem("userId"),
+                    meetingID: this.props.meetingId
                 }
             );
 
-            //if successfully matched user with new meeting then display alert
             if (savedMatchUserWithMeeting.status == "200") {
                 //reload window to lost data
                 window.location.reload();
@@ -258,7 +197,6 @@ class SingleMeetingDetails extends Component {
             `http://127.0.0.1:8000/api/matchUserWithMeeting`
         );
 
-        //check all record that contains email and meeting id, if it's exists then delete user
         for (var i = 0; i < allMatches.data.length; i++) {
             if (
                 _.contains(
@@ -267,10 +205,9 @@ class SingleMeetingDetails extends Component {
                 ) &&
                 _.contains(allMatches.data[i], this.props.meetingId)
             ) {
-                //first delete user from matchUSerWithMeeting
                 const deleteUser = await axios.delete(
                     `http://127.0.0.1:8000/api/matchUserWithMeeting/${
-                        allMatches.data[i]._id
+                        allMatches.data[i].id
                     }`,
                     {
                         headers: {
@@ -280,38 +217,15 @@ class SingleMeetingDetails extends Component {
                 );
 
                 if (deleteUser.status == "200") {
-                    //now we save user to deleteUserFromMeeting when we store users which resigned
-                    const deleteUserWithMeeting = {
-                        userID: sessionStorage.getItem("userId"),
-                        meetingID: this.props.meetingId
-                    };
-
-                    //x-www-form
-                    let formBody = [];
-                    for (let property in deleteUserWithMeeting) {
-                        let encodedKey = encodeURIComponent(property);
-                        let encodedValue = encodeURIComponent(
-                            deleteUserWithMeeting[property]
-                        );
-                        formBody.push(encodedKey + "=" + encodedValue);
-                    }
-
-                    formBody = formBody.join("&");
-
                     const savedDeleteUserFromMeeting = await axios.post(
                         `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
-                        formBody,
                         {
-                            headers: {
-                                "Content-Type":
-                                    "application/x-www-form-urlencoded"
-                            }
+                            userID: sessionStorage.getItem("userId"),
+                            meetingID: this.props.meetingId
                         }
                     );
 
-                    //if successfully matched user with new meeting then display alert
                     if (savedDeleteUserFromMeeting.status == "200") {
-                        //reload window to lost data
                         window.location.reload();
                         alert("we are sad that you resigned.");
                     } else {
@@ -352,45 +266,26 @@ class SingleMeetingDetails extends Component {
             ":" +
             seconds;
 
-        //create comment object
-        const comment = {
-            userId: sessionStorage.getItem("userId"),
-            userEmail: this.state.loggedInUserEmail,
-            meetingId: this.props.meetingId,
-            date: commentDate,
-            commentBody: this.state.commentBody
-        };
-
-        //x-www-form
-        let formBody = [];
-        for (let property in comment) {
-            let encodedKey = encodeURIComponent(property);
-            let encodedValue = encodeURIComponent(comment[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-
-        formBody = formBody.join("&");
-
         const savedComment = await axios.post(
             `http://127.0.0.1:8000/api/comments`,
-            formBody,
-            { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+            {
+                userId: sessionStorage.getItem("userId"),
+                userEmail: this.state.loggedInUserEmail,
+                meetingId: this.props.meetingId,
+                date: commentDate,
+                commentBody: this.state.commentBody
+            }
         );
 
-        //if successfully matched user with new meeting then display alert
         if (savedComment.status == "200") {
-            //reload window to lost data
             window.location.reload();
             alert("You wrote a comment.");
         } else {
             alert("Sorry we can't handle that. Please repeat for a while.");
         }
-
-        //console.log('submitted');
     }
 
     render() {
-        console.log(sessionStorage.getItem("userId"));
         return (
             <div className="register row singleMeetingDetailsDataRow">
                 <div className="col-sm-8 singleMeetingDetailsDataCol">
@@ -405,8 +300,6 @@ class SingleMeetingDetails extends Component {
                         Limit: {this.props.limit} (
                         {this.state.usersEmails.length}/{this.props.limit})
                     </p>
-                    {/*<p>Latitude: {this.props.lattitude}</p>
-          <p>Longitude: {this.props.longitude}</p>*/}
 
                     <p>
                         <strong>Users take part:</strong>

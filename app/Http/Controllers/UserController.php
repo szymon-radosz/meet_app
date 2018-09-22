@@ -16,6 +16,24 @@ class UserController extends Controller
         return $allUsers;
     }
 
+    public function login(Request $request){
+        $nickName = $request->input('emailOrNickname');
+
+        $user = DB::table('users')->where('nickName', $nickName)->first();
+
+        if($user->password == $request->input('password')){
+            $userId = $user->id;
+            $userNickName = $user->nickName;
+        }else{
+            $userId = null;
+            $userNickName = null;
+        }
+
+        $userInfo = (object) ['userId' => $userId, 'userNickName' => $nickName];
+
+        return Response::json($userInfo);
+    }
+
     public function store(Request $request)
     {
         $user = new User;
@@ -30,6 +48,10 @@ class UserController extends Controller
         $user->passwordConfirmation = $request->passwordConfirmation;
 
         $user->save();
+
+        $userInfo = (object) ['userId' => $user->id, 'userNickName' => $user->nickName];
+
+        return Response::json($userInfo);
     }
 
     public function findById($id)

@@ -13,7 +13,7 @@ class CreateTakePart extends Migration
      */
     public function up()
     {
-        Schema::create('takePart', function (Blueprint $table) {
+        Schema::create('take_part', function (Blueprint $table) {
             $table->increments('id');
             $table->string('userId');
             $table->string('meetingId');
@@ -28,6 +28,6 @@ class CreateTakePart extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('takePart');
+        Schema::dropIfExists('take_part');
     }
 }

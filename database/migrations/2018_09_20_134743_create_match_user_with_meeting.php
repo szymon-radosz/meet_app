@@ -13,7 +13,7 @@ class CreateMatchUserWithMeeting extends Migration
      */
     public function up()
     {
-        Schema::create('matchUserWithMeeting', function (Blueprint $table) {
+        Schema::create('match_user_with_meetings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('userId');
             $table->string('meetingId');
@@ -28,6 +28,6 @@ class CreateMatchUserWithMeeting extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('matchUserWithMeeting');
+        Schema::dropIfExists('match_user_with_meetings');
     }
 }

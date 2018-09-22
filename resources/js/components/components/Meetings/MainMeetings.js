@@ -16,41 +16,36 @@ class MainMeetings extends Component {
         this.setCoordinates = this.setCoordinates.bind(this);
     }
 
-    componentDidMount() {
-        axios.get(`http://127.0.0.1:8000/api/meetings`).then(res => {
-            //console.log(res.data);
+    async componentDidMount() {
+        const allMeetings = await axios.get(
+            `http://127.0.0.1:8000/api/meetings`
+        );
 
-            const meetings = res.data;
+        allMeetings.data.map((item, i) => {
+            let meetingObject = {
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                author: item.author,
+                lattitude: item.lattitude,
+                longitude: item.longitude,
+                category: item.category,
+                limit: item.limit,
+                date: item.date,
+                time: item.time
+            };
 
-            meetings.map((item, i) => {
-                let meetingObject = {
-                    id: item._id,
-                    title: item.title,
-                    description: item.description,
-                    author: item.author,
-                    lattitude: item.lattitude,
-                    longitude: item.longitude,
-                    category: item.category,
-                    limit: item.limit,
-                    date: item.date,
-                    time: item.time
-                };
-
-                this.setState(prevState => ({
-                    meetingsData: [...prevState.meetingsData, meetingObject]
-                }));
-            });
+            this.setState(prevState => ({
+                meetingsData: [...prevState.meetingsData, meetingObject]
+            }));
         });
     }
 
-    //after click locate on map button set state with data from singleMeetingOnList
     setCoordinates(childLat, childLng) {
         this.setState({
             lat: childLat,
             lng: childLng
         });
-
-        console.log(childLat);
     }
 
     render() {

@@ -30,6 +30,8 @@ class MeetingController extends Controller
         $meeting->date = $request->date;
 
         $meeting->save();
+
+        return $meeting;
     }
 
     public function findById($id)

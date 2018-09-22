@@ -13,13 +13,13 @@ class matchUserWithMeetingController extends Controller
 {
     public function index()
     {
-        $allMatchUserWithMeeting = DB::table('matchUserWithMeeting')->get();
+        $allMatchUserWithMeeting = DB::table('match_user_with_meetings')->get();
         return $allMatchUserWithMeeting;
     }
 
     public function store(Request $request)
     {
-        $matchUserWithMeeting = new deleteUserFromMeeting;
+        $matchUserWithMeeting = new MatchUserWithMeeting;
 
         $matchUserWithMeeting->userId = $request->userId;
         $matchUserWithMeeting->meetingId = $request->meetingId;
@@ -29,13 +29,13 @@ class matchUserWithMeetingController extends Controller
 
     public function findById($id)
     {
-        $singleMatchUserWithMeeting = DB::table('matchUserWithMeeting')->where('id', $id)->get();
+        $singleMatchUserWithMeeting = DB::table('match_user_with_meetings')->where('id', $id)->get();
         return $singleMatchUserWithMeeting;
     }
 
     public function destroy($id)
     {
-        $singleMatchUserWithMeeting = DB::table('matchUserWithMeeting')->where('id', $id)->delete();
+        $singleMatchUserWithMeeting = DB::table('match_user_with_meetings')->where('id', $id)->delete();
         return;
     }
 }

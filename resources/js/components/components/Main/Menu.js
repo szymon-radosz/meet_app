@@ -15,32 +15,46 @@ class Menu extends Component {
         super(props);
 
         this.state = {
+            userIsLoggedIn: false,
             loggedInUserEmail: "",
             loggedInUserNickName: ""
         };
+
+        this.loginUser = this.loginUser.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     async componentDidMount() {
+        console.log(sessionStorage.getItem("userId"));
+        console.log(sessionStorage.getItem("userNickName"));
+
+        if (sessionStorage.getItem("userId")) {
+            this.setState({ userIsLoggedIn: true });
+        }
+
         const getUser = await axios.get(
-            `http://127.0.0.1:8000/api/users/${sessionStorage.getItem(
-                "userId"
-            )}`
+            `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
         );
 
-        this.setState({ loggedInUserEmail: getUser.data.email });
-        this.setState({ loggedInUserNickName: getUser.data.nickName });
+        this.setState({ loggedInUserEmail: getUser.data[0].email });
+        this.setState({ loggedInUserNickName: getUser.data[0].nickName });
     }
 
-    //logout user
+    loginUser(nickName) {
+        this.setState({ userIsLoggedIn: true });
+        this.setState({ loggedInUserNickName: nickName });
+    }
+
     logout() {
         sessionStorage.setItem("userId", "");
-        window.location.reload("/");
+        sessionStorage.setItem("userNickName", "");
         alert("You're sucessfully logout");
+        this.setState({ userIsLoggedIn: false });
+        this.setState({ loggedInUserNickName: "" });
     }
 
-    //display additional meeting url for logedin user
     meetingLinkUserIsLoggedIn() {
-        if (this.state.loggedInUserEmail) {
+        if (this.state.userIsLoggedIn) {
             return (
                 <li>
                     <Link to="/meetings">Meetings</Link>
@@ -49,12 +63,45 @@ class Menu extends Component {
         }
     }
 
-    //display additional add meeting url for logedin user
     addMeetingLinkUserIsLoggedIn() {
-        if (this.state.loggedInUserEmail) {
+        if (this.state.userIsLoggedIn) {
             return (
                 <li>
                     <Link to="/add-meeting">Add meetings</Link>
+                </li>
+            );
+        }
+    }
+
+    addUserInfoLinkUserIsLoggedIn() {
+        if (this.state.userIsLoggedIn) {
+            return (
+                <li>
+                    <div className="dropdown">
+                        <button
+                            className="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            Account
+                        </button>
+                        <div
+                            className="dropdown-menu"
+                            aria-labelledby="dropdownMenuButton"
+                        >
+                            <a onClick={this.logout}>Sign Out</a>
+                            <Link
+                                to={`/profile/${
+                                    this.state.loggedInUserNickName
+                                }`}
+                            >
+                                My profile
+                            </Link>
+                        </div>
+                    </div>
                 </li>
             );
         }
@@ -99,44 +146,28 @@ class Menu extends Component {
                                     <li>
                                         <Link to="/register">Register</Link>
                                     </li>
-                                    <li>
-                                        <div className="dropdown">
-                                            <button
-                                                className="btn btn-secondary dropdown-toggle"
-                                                type="button"
-                                                id="dropdownMenuButton"
-                                                data-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                            >
-                                                Account
-                                            </button>
-                                            <div
-                                                className="dropdown-menu"
-                                                aria-labelledby="dropdownMenuButton"
-                                            >
-                                                <a onClick={this.logout}>
-                                                    Sign Out
-                                                </a>
-                                                <Link
-                                                    to={`/profile/${
-                                                        this.state
-                                                            .loggedInUserNickName
-                                                    }`}
-                                                >
-                                                    My profile
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    {this.addUserInfoLinkUserIsLoggedIn()}
                                 </ul>
                             </div>
                         </div>
                     </nav>
 
                     <Route exact path="/" component={LandingPage} />
-                    <Route path="/login" component={Login} />
-                    <Route path="/register" component={Register} />
+                    <Route
+                        exact
+                        path="/login"
+                        render={() => {
+                            return <Login loginUser={this.loginUser} />;
+                        }}
+                    />
+                    <Route
+                        exact
+                        path="/register"
+                        render={() => {
+                            return <Register loginUser={this.loginUser} />;
+                        }}
+                    />
+
                     <Route path="/meetings" component={MainMeetings} />
                     <Route path="/meeting/:id" component={MeetingDetails} />
                     <Route path="/profile/:nickname" component={MainProfile} />

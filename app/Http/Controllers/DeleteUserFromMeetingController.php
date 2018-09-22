@@ -12,7 +12,7 @@ class DeleteUserFromMeetingController extends Controller
 {
     public function index()
     {
-        $allDeleteUserFromMeeting = DB::table('deleteUserFromMeeting')->get();
+        $allDeleteUserFromMeeting = DB::table('delete_user_from_meeting')->get();
         return $allDeleteUserFromMeeting;
     }
 
@@ -28,7 +28,7 @@ class DeleteUserFromMeetingController extends Controller
 
     public function findById($id)
     {
-        $singleDeleteUserFromMeeting = DB::table('deleteUserFromMeeting')->where('id', $id)->get();
+        $singleDeleteUserFromMeeting = DB::table('delete_user_from_meeting')->where('id', $id)->get();
         return $singleDeleteUserFromMeeting;
     }
 }

@@ -33,8 +33,6 @@ class MapComponent extends Component {
                 time: item.time
             };
 
-            //console.log(meetingObject);
-
             this.setState(prevState => ({
                 meetingsData: [...prevState.meetingsData, meetingObject]
             }));

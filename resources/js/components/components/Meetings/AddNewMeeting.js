@@ -14,27 +14,21 @@ class AddNewMeeting extends Component {
             longitude: "",
             category: "Select",
             limit: "Select",
-            date: "",
-            time: ""
+            date: ""
         };
 
-        // This binding is necessary to make `this` work in the callback - react documentation
-        //function call 'thi's inside which is 'this' from constructor
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    //when user pass data to text field then update state
     handleChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
 
-    //when user submit the form
     async handleSubmit(event) {
         event.preventDefault();
 
-        //check if user select some value from dropdown list
         if (this.state.limit == "Select") {
             alert("Please choose the limit of users.");
         } else if (this.state.category == "Select") {
@@ -46,80 +40,30 @@ class AddNewMeeting extends Component {
                 )}`
             );
 
-            //create new meeting object with actual state
-            const newMeeting = {
-                title: this.state.title,
-                description: this.state.description,
-                author: getUser.data.nickName,
-                lattitude: this.state.lattitude,
-                longitude: this.state.longitude,
-                category: this.state.category,
-                limit: this.state.limit,
-                date: this.state.date,
-                time: this.state.time
-            };
-
-            //x-www-form
-            let formBody = [];
-            for (let property in newMeeting) {
-                let encodedKey = encodeURIComponent(property);
-                let encodedValue = encodeURIComponent(newMeeting[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-
-            formBody = formBody.join("&");
-            //console.log(formBody);
-
             const savedMeeting = await axios.post(
-                `http://127.0.0.1:8000/api/meetings`,
-                formBody,
+                `http://127.0.0.1:8000/api/meeting`,
                 {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    }
+                    title: this.state.title,
+                    description: this.state.description,
+                    author: "test",
+                    lattitude: this.state.lattitude,
+                    longitude: this.state.longitude,
+                    category: this.state.category,
+                    limit: this.state.limit,
+                    date: this.state.date
                 }
             );
-            //console.log(savedMeeting);
-            //console.log(savedMeeting.data);
 
-            //if successfully registered then display alert
-            if (savedMeeting.status == "200") {
-                //match logged user ID with new meeting ID
-                const matchUserWithMeeting = {
-                    userID: sessionStorage.getItem("userId"),
-                    meetingID: savedMeeting.data._id
-                };
-
-                //x-www-form
-                let formBodyMatchUserWithMeeting = [];
-                for (let property in matchUserWithMeeting) {
-                    let encodedKey = encodeURIComponent(property);
-                    let encodedValue = encodeURIComponent(
-                        matchUserWithMeeting[property]
-                    );
-                    formBodyMatchUserWithMeeting.push(
-                        encodedKey + "=" + encodedValue
-                    );
-                }
-
-                formBodyMatchUserWithMeeting = formBodyMatchUserWithMeeting.join(
-                    "&"
-                );
-
+            if (savedMeeting.status == "201") {
                 const savedMatchUserWithMeeting = await axios.post(
                     `http://127.0.0.1:8000/api/matchUserWithMeeting`,
-                    formBodyMatchUserWithMeeting,
                     {
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        }
+                        userId: sessionStorage.getItem("userId"),
+                        meetingId: savedMeeting.data.id
                     }
                 );
 
-                //if successfully matched user with new meeting then display alert
                 if (savedMatchUserWithMeeting.status == "200") {
-                    //reload window to lost data
-                    window.location.reload();
                     alert("You added new meeting");
                 } else {
                     alert(
@@ -224,17 +168,6 @@ class AddNewMeeting extends Component {
                                 className="form-control"
                                 id="date"
                                 name="date"
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="time">Time:</label>
-                            <input
-                                type="time"
-                                className="form-control"
-                                id="time"
-                                name="time"
                                 onChange={this.handleChange}
                                 required
                             />

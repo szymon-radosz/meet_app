@@ -13,6 +13,7 @@ Route::put('meeting','MeetingController@store');
 Route::post('meeting','MeetingController@store');
 
 Route::get('users','UserController@index');
+Route::post('login', 'UserController@login');
 Route::get('user/{id}','UserController@findById');
 Route::delete('user/{id}','UserController@destroy');
 Route::put('user','UserController@store');
@@ -26,10 +27,10 @@ Route::get('deleteUserFromMeeting','DeleteUserFromMeetingController@index');
 Route::get('deleteUserFromMeeting/{id}','DeleteUserFromMeetingController@findById');
 Route::post('deleteUserFromMeeting','DeleteUserFromMeetingController@store');
 
-Route::get('matchUserWithMeeting','MatchUserWithMeeting@index');
-Route::get('matchUserWithMeeting/{id}','MatchUserWithMeeting@findById');
-Route::post('matchUserWithMeeting','MatchUserWithMeeting@store');
-Route::delete('matchUserWithMeeting/{id}','MatchUserWithMeeting@destroy');
+Route::get('matchUserWithMeetings','MatchUserWithMeetingController@index');
+Route::get('matchUserWithMeeting/{id}','MatchUserWithMeetingController@findById');
+Route::post('matchUserWithMeeting','MatchUserWithMeetingController@store');
+Route::delete('matchUserWithMeeting/{id}','MatchUserWithMeetingController@destroy');
 
 Route::get('takePart','TakePartController@index');
 Route::get('takePart/{id}','TakePartController@findById');
