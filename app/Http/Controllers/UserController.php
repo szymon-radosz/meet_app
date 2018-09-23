@@ -43,6 +43,7 @@ class UserController extends Controller
         $user->age = $request->age;
         $user->description = $request->description;
         $user->nickName = $request->nickName;
+        $user->email = $request->email;
         $user->location = $request->location;
         $user->password = $request->password;
         $user->passwordConfirmation = $request->passwordConfirmation;

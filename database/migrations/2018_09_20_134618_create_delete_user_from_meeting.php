@@ -13,7 +13,7 @@ class CreateDeleteUserFromMeeting extends Migration
      */
     public function up()
     {
-        Schema::create('delete_user_from_meeting', function (Blueprint $table) {
+        Schema::create('delete_user_from_meetings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('userId');
             $table->string('meetingId');
@@ -28,6 +28,6 @@ class CreateDeleteUserFromMeeting extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delete_user_from_meeting');
+        Schema::dropIfExists('delete_user_from_meetings');
     }
 }

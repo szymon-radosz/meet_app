@@ -22,7 +22,7 @@ class CommentController extends Controller
 
         $comment->meetingId = $request->meetingId;
         $comment->userId = $request->userId;
-        $comment->userEmail = $request->userEmail;
+        $comment->userNickName = $request->userNickName;
         $comment->date = $request->date;
         $comment->commentBody = $request->commentBody;
        

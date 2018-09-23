@@ -22,7 +22,6 @@ class SingleMeetingDetails extends Component {
         };
 
         this.takePartClick = this.takePartClick.bind(this);
-        this.submitComment = this.submitComment.bind(this);
         this.resignClick = this.resignClick.bind(this);
     }
 
@@ -32,17 +31,19 @@ class SingleMeetingDetails extends Component {
     }
 
     async componentDidMount() {
+        //console.log(this.props.meetingId);
         const getUser = await axios.get(
             `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
         );
 
-        this.setState({ loggedInUserEmail: getUser.data.email });
-        this.setState({ loggedInUserNickname: getUser.data.nickName });
+        this.setState({ loggedInUserEmail: getUser.data[0].email });
+        this.setState({ loggedInUserNickname: getUser.data[0].nickName });
 
         const getCurrentMeetingInfo = await axios.get(
             `http://127.0.0.1:8000/api/meeting/${this.props.meetingId}`
         );
-        let meetingLimit = getCurrentMeetingInfo.data.limit;
+        //console.log(getCurrentMeetingInfo.data[0]);
+        let meetingLimit = getCurrentMeetingInfo.data[0].limit;
 
         let usersIDs = [];
 
@@ -52,9 +53,11 @@ class SingleMeetingDetails extends Component {
 
         let meetingMatched = 0;
 
+        //console.log(allMatches);
+
         for (var i = 0; i < allMatches.data.length; i++) {
             if (_.contains(allMatches.data[i], this.props.meetingId)) {
-                usersIDs.push(allMatches.data[i].userID);
+                usersIDs.push(allMatches.data[i].userId);
 
                 meetingMatched++;
 
@@ -75,19 +78,25 @@ class SingleMeetingDetails extends Component {
             this.setState({ displayTakPartBtn: true });
         }
 
-        usersIDs.map(async (userID, i) => {
+        //console.log(usersIDs);
+
+        usersIDs.map(async (userId, i) => {
             const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
             for (var i = 0; i < allUsers.data.length; i++) {
-                if (_.contains(allUsers.data[i], userID)) {
+                if (_.contains(allUsers.data[i], parseInt(userId))) {
                     let userObject = {
                         email: allUsers.data[i].email,
                         id: allUsers.data[i].id
                     };
 
+                    //console.log(userObject);
+
                     this.setState(prevState => ({
                         usersEmails: [...prevState.usersEmails, userObject]
                     }));
+                } else {
+                    console.log("cant map user id");
                 }
             }
         });
@@ -150,7 +159,7 @@ class SingleMeetingDetails extends Component {
         let takePart = true;
 
         const allMatches = await axios.get(
-            `http://127.0.0.1:8000/api/matchUserWithMeeting`
+            `http://127.0.0.1:8000/api/matchUserWithMeetings`
         );
 
         for (var i = 0; i < allMatches.data.length; i++) {
@@ -175,8 +184,8 @@ class SingleMeetingDetails extends Component {
             const savedMatchUserWithMeeting = await axios.post(
                 `http://127.0.0.1:8000/api/matchUserWithMeeting`,
                 {
-                    userID: sessionStorage.getItem("userId"),
-                    meetingID: this.props.meetingId
+                    userId: sessionStorage.getItem("userId"),
+                    meetingId: this.props.meetingId
                 }
             );
 
@@ -194,7 +203,7 @@ class SingleMeetingDetails extends Component {
 
     async resignClick() {
         const allMatches = await axios.get(
-            `http://127.0.0.1:8000/api/matchUserWithMeeting`
+            `http://127.0.0.1:8000/api/matchUserWithMeetings`
         );
 
         for (var i = 0; i < allMatches.data.length; i++) {
@@ -220,8 +229,8 @@ class SingleMeetingDetails extends Component {
                     const savedDeleteUserFromMeeting = await axios.post(
                         `http://127.0.0.1:8000/api/deleteUserFromMeeting`,
                         {
-                            userID: sessionStorage.getItem("userId"),
-                            meetingID: this.props.meetingId
+                            userId: sessionStorage.getItem("userId"),
+                            meetingId: this.props.meetingId
                         }
                     );
 
@@ -239,49 +248,6 @@ class SingleMeetingDetails extends Component {
                     );
                 }
             }
-        }
-    }
-
-    async submitComment(event) {
-        event.preventDefault();
-
-        const time = new Date();
-        const year = time.getFullYear();
-        const month = time.getMonth() + 1;
-        const date1 = time.getDate();
-        const hour = time.getHours();
-        const minutes = time.getMinutes();
-        const seconds = time.getSeconds();
-
-        const commentDate =
-            date1 +
-            "-" +
-            month +
-            "-" +
-            year +
-            " " +
-            hour +
-            ":" +
-            minutes +
-            ":" +
-            seconds;
-
-        const savedComment = await axios.post(
-            `http://127.0.0.1:8000/api/comments`,
-            {
-                userId: sessionStorage.getItem("userId"),
-                userEmail: this.state.loggedInUserEmail,
-                meetingId: this.props.meetingId,
-                date: commentDate,
-                commentBody: this.state.commentBody
-            }
-        );
-
-        if (savedComment.status == "200") {
-            window.location.reload();
-            alert("You wrote a comment.");
-        } else {
-            alert("Sorry we can't handle that. Please repeat for a while.");
         }
     }
 
@@ -365,9 +331,11 @@ class SingleMeetingDetails extends Component {
 
                     {this.state.displayCommentsContainer ? (
                         <CommentForm
-                            submitComment={this.submitComment}
                             loggedInUserEmail={this.state.loggedInUserEmail}
-                            handleChange={this.handleChange}
+                            loggedInUserNickname={
+                                this.state.loggedInUserNickname
+                            }
+                            meetingId={this.props.meetingId}
                         />
                     ) : (
                         ""

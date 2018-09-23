@@ -31223,7 +31223,7 @@ var Register = function (_Component) {
                                 }
 
                                 alert("You can't use whitespace in your nickname");
-                                _context.next = 28;
+                                _context.next = 29;
                                 break;
 
                             case 5:
@@ -31236,6 +31236,8 @@ var Register = function (_Component) {
                                 allUsers = _context.sent;
 
 
+                                console.log(allUsers.data);
+
                                 for (i = 0; i < allUsers.data.length; i++) {
                                     if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], this.state.email)) {
                                         uniqueEmail = false;
@@ -31245,31 +31247,31 @@ var Register = function (_Component) {
                                 }
 
                                 if (!(uniqueEmail === false)) {
-                                    _context.next = 15;
+                                    _context.next = 16;
                                     break;
                                 }
 
                                 alert("user with email " + this.state.email + " already exists");
-                                _context.next = 28;
+                                _context.next = 29;
                                 break;
 
-                            case 15:
+                            case 16:
                                 if (!(uniqueNickname === false)) {
-                                    _context.next = 19;
+                                    _context.next = 20;
                                     break;
                                 }
 
                                 alert("user with nickname " + this.state.nickName + " already exists");
-                                _context.next = 28;
+                                _context.next = 29;
                                 break;
 
-                            case 19:
+                            case 20:
                                 if (!(this.state.password === this.state.passwordConfirmation)) {
-                                    _context.next = 27;
+                                    _context.next = 28;
                                     break;
                                 }
 
-                                _context.next = 22;
+                                _context.next = 23;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/user", {
                                     firstName: this.state.firstName,
                                     lastName: this.state.lastName,
@@ -31282,7 +31284,7 @@ var Register = function (_Component) {
                                     passwordConfirmation: this.state.passwordConfirmation
                                 });
 
-                            case 22:
+                            case 23:
                                 savedUser = _context.sent;
 
 
@@ -31297,13 +31299,13 @@ var Register = function (_Component) {
                                 } else {
                                     alert("Sorry we can't handle that. Please repeat for a while.");
                                 }
-                                _context.next = 28;
+                                _context.next = 29;
                                 break;
 
-                            case 27:
+                            case 28:
                                 alert("Sorry password and confirmation doesn't match ");
 
-                            case 28:
+                            case 29:
                             case "end":
                                 return _context.stop();
                         }
@@ -33843,7 +33845,7 @@ var MeetingDetails = function (_Component) {
 
                             case 4:
                                 getMeeting = _context.sent;
-                                meeting = getMeeting.data;
+                                meeting = getMeeting.data[0];
                                 meetingObject = {
                                     id: meeting.id,
                                     title: meeting.title,
@@ -33971,7 +33973,6 @@ var SingleMeetingDetails = function (_Component) {
         };
 
         _this.takePartClick = _this.takePartClick.bind(_this);
-        _this.submitComment = _this.submitComment.bind(_this);
         _this.resignClick = _this.resignClick.bind(_this);
         return _this;
     }
@@ -34003,15 +34004,17 @@ var SingleMeetingDetails = function (_Component) {
                                 getUser = _context3.sent;
 
 
-                                this.setState({ loggedInUserEmail: getUser.data.email });
-                                this.setState({ loggedInUserNickname: getUser.data.nickName });
+                                this.setState({ loggedInUserEmail: getUser.data[0].email });
+                                this.setState({ loggedInUserNickname: getUser.data[0].nickName });
 
                                 _context3.next = 7;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/meeting/" + this.props.meetingId);
 
                             case 7:
                                 getCurrentMeetingInfo = _context3.sent;
-                                meetingLimit = getCurrentMeetingInfo.data.limit;
+
+                                //console.log(getCurrentMeetingInfo.data[0]);
+                                meetingLimit = getCurrentMeetingInfo.data[0].limit;
                                 usersIDs = [];
                                 _context3.next = 12;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
@@ -34020,10 +34023,11 @@ var SingleMeetingDetails = function (_Component) {
                                 allMatches = _context3.sent;
                                 meetingMatched = 0;
 
+                                //console.log(allMatches);
 
                                 for (i = 0; i < allMatches.data.length; i++) {
                                     if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allMatches.data[i], this.props.meetingId)) {
-                                        usersIDs.push(allMatches.data[i].userID);
+                                        usersIDs.push(allMatches.data[i].userId);
 
                                         meetingMatched++;
 
@@ -34038,8 +34042,10 @@ var SingleMeetingDetails = function (_Component) {
                                     this.setState({ displayTakPartBtn: true });
                                 }
 
+                                //console.log(usersIDs);
+
                                 usersIDs.map(function () {
-                                    var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(userID, i) {
+                                    var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(userId, i) {
                                         var allUsers;
                                         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                                             while (1) {
@@ -34053,12 +34059,14 @@ var SingleMeetingDetails = function (_Component) {
 
 
                                                         for (i = 0; i < allUsers.data.length; i++) {
-                                                            if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], userID)) {
+                                                            if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], parseInt(userId))) {
                                                                 (function () {
                                                                     var userObject = {
                                                                         email: allUsers.data[i].email,
                                                                         id: allUsers.data[i].id
                                                                     };
+
+                                                                    //console.log(userObject);
 
                                                                     _this2.setState(function (prevState) {
                                                                         return {
@@ -34066,6 +34074,8 @@ var SingleMeetingDetails = function (_Component) {
                                                                         };
                                                                     });
                                                                 })();
+                                                            } else {
+                                                                console.log("cant map user id");
                                                             }
                                                         }
 
@@ -34188,7 +34198,7 @@ var SingleMeetingDetails = function (_Component) {
                             case 0:
                                 takePart = true;
                                 _context4.next = 3;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeeting");
+                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
 
                             case 3:
                                 allMatches = _context4.sent;
@@ -34212,8 +34222,8 @@ var SingleMeetingDetails = function (_Component) {
                             case 9:
                                 _context4.next = 11;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/matchUserWithMeeting", {
-                                    userID: sessionStorage.getItem("userId"),
-                                    meetingID: this.props.meetingId
+                                    userId: sessionStorage.getItem("userId"),
+                                    meetingId: this.props.meetingId
                                 });
 
                             case 11:
@@ -34252,7 +34262,7 @@ var SingleMeetingDetails = function (_Component) {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 _context5.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeeting");
+                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
 
                             case 2:
                                 allMatches = _context5.sent;
@@ -34286,8 +34296,8 @@ var SingleMeetingDetails = function (_Component) {
 
                                 _context5.next = 12;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/deleteUserFromMeeting", {
-                                    userID: sessionStorage.getItem("userId"),
-                                    meetingID: this.props.meetingId
+                                    userId: sessionStorage.getItem("userId"),
+                                    meetingId: this.props.meetingId
                                 });
 
                             case 12:
@@ -34324,59 +34334,6 @@ var SingleMeetingDetails = function (_Component) {
             }
 
             return resignClick;
-        }()
-    }, {
-        key: "submitComment",
-        value: function () {
-            var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(event) {
-                var time, year, month, date1, hour, minutes, seconds, commentDate, savedComment;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
-                    while (1) {
-                        switch (_context6.prev = _context6.next) {
-                            case 0:
-                                event.preventDefault();
-
-                                time = new Date();
-                                year = time.getFullYear();
-                                month = time.getMonth() + 1;
-                                date1 = time.getDate();
-                                hour = time.getHours();
-                                minutes = time.getMinutes();
-                                seconds = time.getSeconds();
-                                commentDate = date1 + "-" + month + "-" + year + " " + hour + ":" + minutes + ":" + seconds;
-                                _context6.next = 11;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comments", {
-                                    userId: sessionStorage.getItem("userId"),
-                                    userEmail: this.state.loggedInUserEmail,
-                                    meetingId: this.props.meetingId,
-                                    date: commentDate,
-                                    commentBody: this.state.commentBody
-                                });
-
-                            case 11:
-                                savedComment = _context6.sent;
-
-
-                                if (savedComment.status == "200") {
-                                    window.location.reload();
-                                    alert("You wrote a comment.");
-                                } else {
-                                    alert("Sorry we can't handle that. Please repeat for a while.");
-                                }
-
-                            case 13:
-                            case "end":
-                                return _context6.stop();
-                        }
-                    }
-                }, _callee6, this);
-            }));
-
-            function submitComment(_x5) {
-                return _ref6.apply(this, arguments);
-            }
-
-            return submitComment;
         }()
     }, {
         key: "render",
@@ -34491,9 +34448,9 @@ var SingleMeetingDetails = function (_Component) {
                         });
                     }) : "",
                     this.state.displayCommentsContainer ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__singleMeetingComponents_CommentForm__["a" /* default */], {
-                        submitComment: this.submitComment,
                         loggedInUserEmail: this.state.loggedInUserEmail,
-                        handleChange: this.handleChange
+                        loggedInUserNickname: this.state.loggedInUserNickname,
+                        meetingId: this.props.meetingId
                     }) : ""
                 ),
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -34603,32 +34560,171 @@ var Comment = function Comment(props) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 
 
-var CommentForm = function CommentForm(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "form",
-        { onSubmit: props.submitComment },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "div",
-            { className: "form-group" },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "label",
-                { htmlFor: "commentBody" },
-                "Write a comment like a ",
-                props.loggedInUserEmail
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("textarea", { maxLength: "150", className: "form-control", name: "commentBody", id: "commentBody", rows: "3", onChange: props.handleChange })
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "button",
-            { type: "submit", className: "btn btn-default" },
-            "Send a comment"
-        )
-    );
-};
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var CommentForm = function (_Component) {
+    _inherits(CommentForm, _Component);
+
+    function CommentForm(props) {
+        _classCallCheck(this, CommentForm);
+
+        var _this = _possibleConstructorReturn(this, (CommentForm.__proto__ || Object.getPrototypeOf(CommentForm)).call(this, props));
+
+        _this.state = {
+            commentBody: "",
+            loggedInUserNickname: "",
+            meetingId: ""
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.submitComment = _this.submitComment.bind(_this);
+        return _this;
+    }
+
+    _createClass(CommentForm, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.setState({
+                loggedInUserNickname: this.props.loggedInUserNickname,
+                meetingId: this.props.meetingId
+            });
+        }
+    }, {
+        key: "handleChange",
+        value: function handleChange(event) {
+            var _event$target = event.target,
+                name = _event$target.name,
+                value = _event$target.value;
+
+            this.setState(_defineProperty({}, name, value));
+        }
+    }, {
+        key: "submitComment",
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
+                var time, year, month, date1, commentDate, savedComment;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                event.preventDefault();
+
+                                console.log(this.state.commentBody);
+
+                                time = new Date();
+                                year = time.getFullYear();
+                                month = time.getMonth() + 1;
+                                date1 = time.getDate();
+                                /*const hour = time.getHours();
+                                const minutes = time.getMinutes();
+                                const seconds = time.getSeconds();*/
+
+                                /*const commentDate =
+                                    date1 +
+                                    "-" +
+                                    month +
+                                    "-" +
+                                    year +
+                                    " " +
+                                    hour +
+                                    ":" +
+                                    minutes +
+                                    ":" +
+                                    seconds;*/
+
+                                commentDate = year + "-" + month + "-" + date1;
+                                _context.next = 9;
+                                return axios.post("http://127.0.0.1:8000/api/comment", {
+                                    userId: sessionStorage.getItem("userId"),
+                                    userNickName: this.state.loggedInUserNickname,
+                                    meetingId: this.props.meetingId,
+                                    date: commentDate,
+                                    commentBody: this.state.commentBody
+                                });
+
+                            case 9:
+                                savedComment = _context.sent;
+
+
+                                if (savedComment.status == "200") {
+                                    window.location.reload();
+                                    alert("You wrote a comment.");
+                                } else {
+                                    alert("Sorry we can't handle that. Please repeat for a while.");
+                                }
+
+                            case 11:
+                            case "end":
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function submitComment(_x) {
+                return _ref.apply(this, arguments);
+            }
+
+            return submitComment;
+        }()
+    }, {
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "div",
+                null,
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "form",
+                    { onSubmit: this.submitComment },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                        "div",
+                        { className: "form-group" },
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                            "label",
+                            { htmlFor: "commentBody" },
+                            "Write a comment like a",
+                            " ",
+                            this.props.loggedInUserNickName
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("textarea", {
+                            maxLength: "150",
+                            className: "form-control",
+                            name: "commentBody",
+                            id: "commentBody",
+                            rows: "3",
+                            onChange: this.handleChange
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                        "button",
+                        { type: "submit", className: "btn btn-default" },
+                        "Send a comment"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return CommentForm;
+}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (CommentForm);
 

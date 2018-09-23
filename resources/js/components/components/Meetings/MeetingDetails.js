@@ -21,7 +21,7 @@ class MeetingDetails extends Component {
             `http://127.0.0.1:8000/api/meeting/${meetingId}`
         );
 
-        const meeting = getMeeting.data;
+        const meeting = getMeeting.data[0];
 
         let meetingObject = {
             id: meeting.id,

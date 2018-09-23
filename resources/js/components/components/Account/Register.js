@@ -37,6 +37,8 @@ class Register extends Component {
 
             const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
+            console.log(allUsers.data);
+
             for (var i = 0; i < allUsers.data.length; i++) {
                 if (_.contains(allUsers.data[i], this.state.email)) {
                     uniqueEmail = false;
