@@ -4954,23 +4954,15 @@ var LandingPage = function (_Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_pigeon_maps__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_pigeon_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_pigeon_maps__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_pigeon_marker__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_pigeon_marker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_pigeon_marker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pigeon_maps__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pigeon_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_pigeon_maps__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_pigeon_marker__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_pigeon_marker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_pigeon_marker__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4989,91 +4981,35 @@ var MapComponent = function (_Component) {
     function MapComponent(props) {
         _classCallCheck(this, MapComponent);
 
-        var _this = _possibleConstructorReturn(this, (MapComponent.__proto__ || Object.getPrototypeOf(MapComponent)).call(this, props));
-
-        _this.state = {
-            meetingsData: []
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (MapComponent.__proto__ || Object.getPrototypeOf(MapComponent)).call(this, props));
     }
 
     _createClass(MapComponent, [{
-        key: "componentDidMount",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var _this2 = this;
-
-                var allMettings, meetings;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                _context.next = 2;
-                                return __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get("http://127.0.0.1:8000/api/meetings");
-
-                            case 2:
-                                allMettings = _context.sent;
-                                meetings = allMettings.data;
-
-
-                                meetings.map(function (item, i) {
-                                    var meetingObject = {
-                                        id: item._id,
-                                        title: item.title,
-                                        description: item.description,
-                                        author: item.author,
-                                        lattitude: item.lattitude,
-                                        longitude: item.longitude,
-                                        category: item.category,
-                                        limit: item.limit,
-                                        date: item.date,
-                                        time: item.time
-                                    };
-
-                                    _this2.setState(function (prevState) {
-                                        return {
-                                            meetingsData: [].concat(_toConsumableArray(prevState.meetingsData), [meetingObject])
-                                        };
-                                    });
-                                });
-
-                            case 5:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function componentDidMount() {
-                return _ref.apply(this, arguments);
-            }
-
-            return componentDidMount;
-        }()
-    }, {
         key: "render",
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_2_pigeon_maps___default.a,
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_1_pigeon_maps___default.a,
                 {
                     center: [this.props.latCenter, this.props.lngCenter],
                     zoom: 12
                 },
-                this.state.meetingsData.map(function (meeting, i) {
-                    //console.log(meeting);
-                    return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_pigeon_marker___default.a, {
+                this.props.meetingsData ? this.props.meetingsData.map(function (meeting, i) {
+                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_pigeon_marker___default.a, {
                         key: i,
                         anchor: [parseFloat(meeting.lattitude), parseFloat(meeting.longitude)],
                         payload: 1
                     });
+                }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_pigeon_marker___default.a, {
+                    key: this.props.latCenter,
+                    anchor: [parseFloat(this.props.latCenter), parseFloat(this.props.lngCenter)],
+                    payload: 1
                 })
             );
         }
     }]);
 
     return MapComponent;
-}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (MapComponent);
 
@@ -27346,7 +27282,6 @@ module.exports = "/images/main.jpg?0bb3decc3ce08080a6d1edb1bee3e421";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Menu_js__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LandingPage_js__ = __webpack_require__(40);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27358,28 +27293,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-
 var Main = function (_Component) {
-  _inherits(Main, _Component);
+    _inherits(Main, _Component);
 
-  function Main() {
-    _classCallCheck(this, Main);
+    function Main() {
+        _classCallCheck(this, Main);
 
-    return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
-  }
-
-  _createClass(Main, [{
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], null)
-      );
+        return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
     }
-  }]);
 
-  return Main;
+    _createClass(Main, [{
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], null)
+            );
+        }
+    }]);
+
+    return Main;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (Main);
@@ -27426,7 +27360,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-
 var Menu = function (_Component) {
     _inherits(Menu, _Component);
 
@@ -27455,24 +27388,24 @@ var Menu = function (_Component) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                console.log(sessionStorage.getItem("userId"));
-                                console.log(sessionStorage.getItem("userNickName"));
-
-                                if (sessionStorage.getItem("userId")) {
-                                    this.setState({ userIsLoggedIn: true });
+                                if (!sessionStorage.getItem("userId")) {
+                                    _context.next = 7;
+                                    break;
                                 }
 
-                                _context.next = 5;
+                                this.setState({ userIsLoggedIn: true });
+
+                                _context.next = 4;
                                 return __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
 
-                            case 5:
+                            case 4:
                                 getUser = _context.sent;
 
 
                                 this.setState({ loggedInUserEmail: getUser.data[0].email });
                                 this.setState({ loggedInUserNickName: getUser.data[0].nickName });
 
-                            case 8:
+                            case 7:
                             case "end":
                                 return _context.stop();
                         }
@@ -27500,81 +27433,6 @@ var Menu = function (_Component) {
             alert("You're sucessfully logout");
             this.setState({ userIsLoggedIn: false });
             this.setState({ loggedInUserNickName: "" });
-        }
-    }, {
-        key: "meetingLinkUserIsLoggedIn",
-        value: function meetingLinkUserIsLoggedIn() {
-            if (this.state.userIsLoggedIn) {
-                return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                        { to: "/meetings" },
-                        "Meetings"
-                    )
-                );
-            }
-        }
-    }, {
-        key: "addMeetingLinkUserIsLoggedIn",
-        value: function addMeetingLinkUserIsLoggedIn() {
-            if (this.state.userIsLoggedIn) {
-                return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                        { to: "/add-meeting" },
-                        "Add meetings"
-                    )
-                );
-            }
-        }
-    }, {
-        key: "addUserInfoLinkUserIsLoggedIn",
-        value: function addUserInfoLinkUserIsLoggedIn() {
-            if (this.state.userIsLoggedIn) {
-                return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "li",
-                    null,
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "div",
-                        { className: "dropdown" },
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "button",
-                            {
-                                className: "btn btn-secondary dropdown-toggle",
-                                type: "button",
-                                id: "dropdownMenuButton",
-                                "data-toggle": "dropdown",
-                                "aria-haspopup": "true",
-                                "aria-expanded": "false"
-                            },
-                            "Account"
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "div",
-                            {
-                                className: "dropdown-menu",
-                                "aria-labelledby": "dropdownMenuButton"
-                            },
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                "a",
-                                { onClick: this.logout },
-                                "Sign Out"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                                __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                {
-                                    to: "/profile/" + this.state.loggedInUserNickName
-                                },
-                                "My profile"
-                            )
-                        )
-                    )
-                );
-            }
         }
     }, {
         key: "render",
@@ -27630,8 +27488,24 @@ var Menu = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                                     "ul",
                                     { className: "nav navbar-nav navbar-right" },
-                                    this.meetingLinkUserIsLoggedIn(),
-                                    this.addMeetingLinkUserIsLoggedIn(),
+                                    this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                        "li",
+                                        null,
+                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                                            { to: "/meetings" },
+                                            "Meetings"
+                                        )
+                                    ) : "",
+                                    this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                        "li",
+                                        null,
+                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                            __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                                            { to: "/add-meeting" },
+                                            "Add meetings"
+                                        )
+                                    ) : "",
                                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                                         "li",
                                         null,
@@ -27650,7 +27524,45 @@ var Menu = function (_Component) {
                                             "Register"
                                         )
                                     ),
-                                    this.addUserInfoLinkUserIsLoggedIn()
+                                    this.state.userIsLoggedIn ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                        "li",
+                                        null,
+                                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                            "div",
+                                            { className: "dropdown" },
+                                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                                "button",
+                                                {
+                                                    className: "btn btn-secondary dropdown-toggle",
+                                                    type: "button",
+                                                    id: "dropdownMenuButton",
+                                                    "data-toggle": "dropdown",
+                                                    "aria-haspopup": "true",
+                                                    "aria-expanded": "false"
+                                                },
+                                                "Account"
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                                "div",
+                                                {
+                                                    className: "dropdown-menu",
+                                                    "aria-labelledby": "dropdownMenuButton"
+                                                },
+                                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                                    "a",
+                                                    { onClick: this.logout },
+                                                    "Sign Out"
+                                                ),
+                                                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                                                    __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
+                                                    {
+                                                        to: "/profile/" + this.state.loggedInUserNickName
+                                                    },
+                                                    "My profile"
+                                                )
+                                            )
+                                        )
+                                    ) : ""
                                 )
                             )
                         )
@@ -31168,20 +31080,24 @@ var Register = function (_Component) {
                                 }
 
                                 alert("You can't use whitespace in your nickname");
-                                _context.next = 29;
+                                _context.next = 27;
                                 break;
 
                             case 5:
                                 uniqueEmail = true;
                                 uniqueNickname = true;
-                                _context.next = 9;
+
+                                if (!(this.state.password === this.state.passwordConfirmation)) {
+                                    _context.next = 26;
+                                    break;
+                                }
+
+                                _context.next = 10;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/users");
 
-                            case 9:
+                            case 10:
                                 allUsers = _context.sent;
 
-
-                                console.log(allUsers.data);
 
                                 for (i = 0; i < allUsers.data.length; i++) {
                                     if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allUsers.data[i], this.state.email)) {
@@ -31197,7 +31113,7 @@ var Register = function (_Component) {
                                 }
 
                                 alert("user with email " + this.state.email + " already exists");
-                                _context.next = 29;
+                                _context.next = 24;
                                 break;
 
                             case 16:
@@ -31207,16 +31123,11 @@ var Register = function (_Component) {
                                 }
 
                                 alert("user with nickname " + this.state.nickName + " already exists");
-                                _context.next = 29;
+                                _context.next = 24;
                                 break;
 
                             case 20:
-                                if (!(this.state.password === this.state.passwordConfirmation)) {
-                                    _context.next = 28;
-                                    break;
-                                }
-
-                                _context.next = 23;
+                                _context.next = 22;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/user", {
                                     firstName: this.state.firstName,
                                     lastName: this.state.lastName,
@@ -31229,11 +31140,10 @@ var Register = function (_Component) {
                                     passwordConfirmation: this.state.passwordConfirmation
                                 });
 
-                            case 23:
+                            case 22:
                                 savedUser = _context.sent;
 
 
-                                console.log(savedUser.data);
                                 if (savedUser.status == "200") {
                                     sessionStorage.setItem("userId", "");
                                     sessionStorage.setItem("userNickName", "");
@@ -31244,13 +31154,15 @@ var Register = function (_Component) {
                                 } else {
                                     alert("Sorry we can't handle that. Please repeat for a while.");
                                 }
-                                _context.next = 29;
+
+                            case 24:
+                                _context.next = 27;
                                 break;
 
-                            case 28:
+                            case 26:
                                 alert("Sorry password and confirmation doesn't match ");
 
-                            case 29:
+                            case 27:
                             case "end":
                                 return _context.stop();
                         }
@@ -31598,6 +31510,7 @@ var MainMeetings = function (_Component) {
                         style: { height: "calc(100vh - 60px)" }
                     },
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__MapComponent_js__["a" /* default */], {
+                        meetingsData: this.state.meetingsData,
                         latCenter: this.state.lat,
                         lngCenter: this.state.lng
                     })
@@ -34612,8 +34525,6 @@ var CommentForm = function (_Component) {
                             case 0:
                                 event.preventDefault();
 
-                                console.log(this.state.commentBody);
-
                                 time = new Date();
                                 year = time.getFullYear();
                                 month = time.getMonth() + 1;
@@ -34636,7 +34547,7 @@ var CommentForm = function (_Component) {
                                     seconds;*/
 
                                 commentDate = year + "-" + month + "-" + date1;
-                                _context.next = 9;
+                                _context.next = 8;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comment", {
                                     userId: sessionStorage.getItem("userId"),
                                     userNickName: this.state.loggedInUserNickname,
@@ -34645,7 +34556,7 @@ var CommentForm = function (_Component) {
                                     commentBody: this.state.commentBody
                                 });
 
-                            case 9:
+                            case 8:
                                 savedComment = _context.sent;
 
 
@@ -34656,7 +34567,7 @@ var CommentForm = function (_Component) {
                                     alert("Sorry we can't handle that. Please repeat for a while.");
                                 }
 
-                            case 11:
+                            case 10:
                             case "end":
                                 return _context.stop();
                         }

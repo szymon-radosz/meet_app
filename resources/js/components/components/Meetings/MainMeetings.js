@@ -77,6 +77,7 @@ class MainMeetings extends Component {
                     style={{ height: "calc(100vh - 60px)" }}
                 >
                     <MapComponent
+                        meetingsData={this.state.meetingsData}
                         latCenter={this.state.lat}
                         lngCenter={this.state.lng}
                     />

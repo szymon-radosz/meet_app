@@ -30,8 +30,6 @@ class CommentForm extends Component {
     async submitComment(event) {
         event.preventDefault();
 
-        console.log(this.state.commentBody);
-
         const time = new Date();
         const year = time.getFullYear();
         const month = time.getMonth() + 1;

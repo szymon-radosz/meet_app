@@ -30,6 +30,7 @@ const Comment = props => (
             <p>
                 {props.userNickname} wrote {props.date}:{" "}
             </p>
+
             <p>{props.commentBody}</p>
         </div>
     </div>

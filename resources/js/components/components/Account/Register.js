@@ -35,30 +35,34 @@ class Register extends Component {
             let uniqueEmail = true;
             let uniqueNickname = true;
 
-            const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
+            if (this.state.password === this.state.passwordConfirmation) {
+                const allUsers = await axios.get(
+                    `http://127.0.0.1:8000/api/users`
+                );
 
-            console.log(allUsers.data);
-
-            for (var i = 0; i < allUsers.data.length; i++) {
-                if (_.contains(allUsers.data[i], this.state.email)) {
-                    uniqueEmail = false;
-                } else if (_.contains(allUsers.data[i], this.state.nickName)) {
-                    uniqueNickname = false;
+                for (var i = 0; i < allUsers.data.length; i++) {
+                    if (_.contains(allUsers.data[i], this.state.email)) {
+                        uniqueEmail = false;
+                    } else if (
+                        _.contains(allUsers.data[i], this.state.nickName)
+                    ) {
+                        uniqueNickname = false;
+                    }
                 }
-            }
 
-            if (uniqueEmail === false) {
-                alert(
-                    "user with email " + this.state.email + " already exists"
-                );
-            } else if (uniqueNickname === false) {
-                alert(
-                    "user with nickname " +
-                        this.state.nickName +
-                        " already exists"
-                );
-            } else {
-                if (this.state.password === this.state.passwordConfirmation) {
+                if (uniqueEmail === false) {
+                    alert(
+                        "user with email " +
+                            this.state.email +
+                            " already exists"
+                    );
+                } else if (uniqueNickname === false) {
+                    alert(
+                        "user with nickname " +
+                            this.state.nickName +
+                            " already exists"
+                    );
+                } else {
                     const savedUser = await axios.post(
                         `http://127.0.0.1:8000/api/user`,
                         {
@@ -75,7 +79,6 @@ class Register extends Component {
                         }
                     );
 
-                    console.log(savedUser.data);
                     if (savedUser.status == "200") {
                         sessionStorage.setItem("userId", "");
                         sessionStorage.setItem("userNickName", "");
@@ -91,9 +94,9 @@ class Register extends Component {
                             "Sorry we can't handle that. Please repeat for a while."
                         );
                     }
-                } else {
-                    alert("Sorry password and confirmation doesn't match ");
                 }
+            } else {
+                alert("Sorry password and confirmation doesn't match ");
             }
         }
     }
@@ -116,6 +119,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="lastName">Last Name:</label>
                             <input
@@ -127,6 +131,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="email">Email:</label>
                             <input
@@ -138,6 +143,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="nickName">Nick name:</label>
                             <input
@@ -149,6 +155,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="age">Age:</label>
                             <input
@@ -160,6 +167,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="description">
                                 Description of myself:
@@ -173,6 +181,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="location">Location:</label>
                             <input
@@ -184,6 +193,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="password">Password:</label>
                             <input
@@ -195,6 +205,7 @@ class Register extends Component {
                                 required
                             />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="passwordConfirmation">
                                 Password confirmation:

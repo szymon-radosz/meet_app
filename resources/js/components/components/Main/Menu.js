@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from "axios";
-
 import LandingPage from "./LandingPage.js";
 import Login from "./../Account/Login.js";
 import Register from "./../Account/Register.js";
@@ -25,19 +24,18 @@ class Menu extends Component {
     }
 
     async componentDidMount() {
-        console.log(sessionStorage.getItem("userId"));
-        console.log(sessionStorage.getItem("userNickName"));
-
         if (sessionStorage.getItem("userId")) {
             this.setState({ userIsLoggedIn: true });
+
+            const getUser = await axios.get(
+                `http://127.0.0.1:8000/api/user/${sessionStorage.getItem(
+                    "userId"
+                )}`
+            );
+
+            this.setState({ loggedInUserEmail: getUser.data[0].email });
+            this.setState({ loggedInUserNickName: getUser.data[0].nickName });
         }
-
-        const getUser = await axios.get(
-            `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
-        );
-
-        this.setState({ loggedInUserEmail: getUser.data[0].email });
-        this.setState({ loggedInUserNickName: getUser.data[0].nickName });
     }
 
     loginUser(nickName) {
@@ -51,60 +49,6 @@ class Menu extends Component {
         alert("You're sucessfully logout");
         this.setState({ userIsLoggedIn: false });
         this.setState({ loggedInUserNickName: "" });
-    }
-
-    meetingLinkUserIsLoggedIn() {
-        if (this.state.userIsLoggedIn) {
-            return (
-                <li>
-                    <Link to="/meetings">Meetings</Link>
-                </li>
-            );
-        }
-    }
-
-    addMeetingLinkUserIsLoggedIn() {
-        if (this.state.userIsLoggedIn) {
-            return (
-                <li>
-                    <Link to="/add-meeting">Add meetings</Link>
-                </li>
-            );
-        }
-    }
-
-    addUserInfoLinkUserIsLoggedIn() {
-        if (this.state.userIsLoggedIn) {
-            return (
-                <li>
-                    <div className="dropdown">
-                        <button
-                            className="btn btn-secondary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                        >
-                            Account
-                        </button>
-                        <div
-                            className="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                        >
-                            <a onClick={this.logout}>Sign Out</a>
-                            <Link
-                                to={`/profile/${
-                                    this.state.loggedInUserNickName
-                                }`}
-                            >
-                                My profile
-                            </Link>
-                        </div>
-                    </div>
-                </li>
-            );
-        }
     }
 
     render() {
@@ -138,15 +82,62 @@ class Menu extends Component {
                                 className="navbar-collapse collapse"
                             >
                                 <ul className="nav navbar-nav navbar-right">
-                                    {this.meetingLinkUserIsLoggedIn()}
-                                    {this.addMeetingLinkUserIsLoggedIn()}
+                                    {this.state.userIsLoggedIn ? (
+                                        <li>
+                                            <Link to="/meetings">Meetings</Link>
+                                        </li>
+                                    ) : (
+                                        ""
+                                    )}
+                                    {this.state.userIsLoggedIn ? (
+                                        <li>
+                                            <Link to="/add-meeting">
+                                                Add meetings
+                                            </Link>
+                                        </li>
+                                    ) : (
+                                        ""
+                                    )}
                                     <li>
                                         <Link to="/login">Login</Link>
                                     </li>
                                     <li>
                                         <Link to="/register">Register</Link>
                                     </li>
-                                    {this.addUserInfoLinkUserIsLoggedIn()}
+                                    {this.state.userIsLoggedIn ? (
+                                        <li>
+                                            <div className="dropdown">
+                                                <button
+                                                    className="btn btn-secondary dropdown-toggle"
+                                                    type="button"
+                                                    id="dropdownMenuButton"
+                                                    data-toggle="dropdown"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="false"
+                                                >
+                                                    Account
+                                                </button>
+                                                <div
+                                                    className="dropdown-menu"
+                                                    aria-labelledby="dropdownMenuButton"
+                                                >
+                                                    <a onClick={this.logout}>
+                                                        Sign Out
+                                                    </a>
+                                                    <Link
+                                                        to={`/profile/${
+                                                            this.state
+                                                                .loggedInUserNickName
+                                                        }`}
+                                                    >
+                                                        My profile
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ) : (
+                                        ""
+                                    )}
                                 </ul>
                             </div>
                         </div>
@@ -167,7 +158,6 @@ class Menu extends Component {
                             return <Register loginUser={this.loginUser} />;
                         }}
                     />
-
                     <Route path="/meetings" component={MainMeetings} />
                     <Route path="/meeting/:id" component={MeetingDetails} />
                     <Route path="/profile/:nickname" component={MainProfile} />
