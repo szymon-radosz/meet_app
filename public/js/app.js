@@ -33919,6 +33919,7 @@ var SingleMeetingDetails = function (_Component) {
 
         _this.takePartClick = _this.takePartClick.bind(_this);
         _this.resignClick = _this.resignClick.bind(_this);
+        _this.addCommentToState = _this.addCommentToState.bind(_this);
         return _this;
     }
 
@@ -33957,8 +33958,6 @@ var SingleMeetingDetails = function (_Component) {
 
                             case 7:
                                 getCurrentMeetingInfo = _context3.sent;
-
-                                //console.log(getCurrentMeetingInfo.data[0]);
                                 meetingLimit = getCurrentMeetingInfo.data[0].limit;
                                 usersIDs = [];
                                 _context3.next = 12;
@@ -33968,7 +33967,6 @@ var SingleMeetingDetails = function (_Component) {
                                 allMatches = _context3.sent;
                                 meetingMatched = 0;
 
-                                //console.log(allMatches);
 
                                 for (i = 0; i < allMatches.data.length; i++) {
                                     if (__WEBPACK_IMPORTED_MODULE_3_underscore___default.a.contains(allMatches.data[i], this.props.meetingId)) {
@@ -33986,8 +33984,6 @@ var SingleMeetingDetails = function (_Component) {
                                 if (meetingMatched < meetingLimit) {
                                     this.setState({ displayTakPartBtn: true });
                                 }
-
-                                //console.log(usersIDs);
 
                                 usersIDs.map(function () {
                                     var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(userId, i) {
@@ -34010,8 +34006,6 @@ var SingleMeetingDetails = function (_Component) {
                                                                         email: allUsers.data[i].email,
                                                                         id: allUsers.data[i].id
                                                                     };
-
-                                                                    //console.log(userObject);
 
                                                                     _this2.setState(function (prevState) {
                                                                         return {
@@ -34057,7 +34051,7 @@ var SingleMeetingDetails = function (_Component) {
 
                                 ResignedUsersIDs.map(function () {
                                     var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(userID, i) {
-                                        var allUsers, userObject;
+                                        var user, userObject;
                                         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                                             while (1) {
                                                 switch (_context2.prev = _context2.next) {
@@ -34066,10 +34060,10 @@ var SingleMeetingDetails = function (_Component) {
                                                         return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + userID);
 
                                                     case 2:
-                                                        allUsers = _context2.sent;
+                                                        user = _context2.sent;
                                                         userObject = {
-                                                            email: allUsers.data.email,
-                                                            id: allUsers.data.id
+                                                            email: user.data.email,
+                                                            id: user.data.id
                                                         };
 
 
@@ -34136,7 +34130,7 @@ var SingleMeetingDetails = function (_Component) {
         key: "takePartClick",
         value: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
-                var takePart, allMatches, i, savedMatchUserWithMeeting;
+                var takePart, allMatches, i, savedMatchUserWithMeeting, user, userObject;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
                     while (1) {
                         switch (_context4.prev = _context4.next) {
@@ -34161,7 +34155,7 @@ var SingleMeetingDetails = function (_Component) {
                                 }
 
                                 alert("user with email " + this.state.loggedInUserEmail + " took part in the past!");
-                                _context4.next = 13;
+                                _context4.next = 20;
                                 break;
 
                             case 9:
@@ -34174,16 +34168,46 @@ var SingleMeetingDetails = function (_Component) {
                             case 11:
                                 savedMatchUserWithMeeting = _context4.sent;
 
-
-                                if (savedMatchUserWithMeeting.status == "200") {
-                                    //reload window to lost data
-                                    window.location.reload();
-                                    alert("You are saved to that meeting. Now you can write comments.");
-                                } else {
-                                    alert("Sorry we can't handle that. Please repeat for a while.");
+                                if (!(savedMatchUserWithMeeting.status == "200")) {
+                                    _context4.next = 19;
+                                    break;
                                 }
 
-                            case 13:
+                                _context4.next = 15;
+                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
+
+                            case 15:
+                                user = _context4.sent;
+
+
+                                if (user.status == 200) {
+                                    userObject = {
+                                        email: user.data.email,
+                                        id: user.data.id
+                                    };
+
+
+                                    this.setState(function (prevState) {
+                                        return {
+                                            usersEmails: [].concat(_toConsumableArray(prevState.usersEmails), [userObject])
+                                        };
+                                    });
+                                    this.setState({
+                                        displayTakPartBtn: false,
+                                        displayResignBtn: true,
+                                        displayCommentsContainer: true
+                                    });
+                                    alert("You are saved to that meeting. Now you can write comments.");
+                                } else {
+                                    alert("Troubles with adding user to tak part.");
+                                }
+                                _context4.next = 20;
+                                break;
+
+                            case 19:
+                                alert("Sorry we can't handle that. Please repeat for a while.");
+
+                            case 20:
                             case "end":
                                 return _context4.stop();
                         }
@@ -34280,6 +34304,21 @@ var SingleMeetingDetails = function (_Component) {
 
             return resignClick;
         }()
+    }, {
+        key: "addCommentToState",
+        value: function addCommentToState(userNickname, commentDate, commentBody) {
+            var commentObject = {
+                userNickname: userNickname,
+                date: commentDate,
+                commentBody: commentBody
+            };
+
+            this.setState(function (prevState) {
+                return {
+                    comments: [].concat(_toConsumableArray(prevState.comments), [commentObject])
+                };
+            });
+        }
     }, {
         key: "render",
         value: function render() {
@@ -34387,7 +34426,6 @@ var SingleMeetingDetails = function (_Component) {
                         return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__singleMeetingComponents_Comment__["a" /* default */], {
                             key: i,
                             userNickname: _this3.state.loggedInUserNickname,
-                            userEmail: _this3.state.loggedInUserEmail,
                             date: comment.date,
                             commentBody: comment.commentBody
                         });
@@ -34395,7 +34433,8 @@ var SingleMeetingDetails = function (_Component) {
                     this.state.displayCommentsContainer ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__singleMeetingComponents_CommentForm__["a" /* default */], {
                         loggedInUserEmail: this.state.loggedInUserEmail,
                         loggedInUserNickname: this.state.loggedInUserNickname,
-                        meetingId: this.props.meetingId
+                        meetingId: this.props.meetingId,
+                        addCommentToState: this.addCommentToState
                     }) : ""
                 ),
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -34430,72 +34469,70 @@ var SingleMeetingDetails = function (_Component) {
 
 
 var Comment = function Comment(props) {
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    "div",
-    { className: "panel panel-default" },
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      "div",
-      { className: "panel-body" },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
-        { className: "btn-group dropup" },
+        { className: "panel panel-default" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "button",
-          { type: "button", className: "btn btn-secondary" },
-          "Dropup"
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "button",
-          {
-            type: "button",
-            className: "btn btn-secondary dropdown-toggle",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
-          },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "span",
-            { className: "sr-only" },
-            "Toggle Dropdown"
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          { className: "dropdown-menu" },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            props.userNickname
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "li",
-            null,
+            "div",
+            { className: "panel-body" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-              { to: "/profile/" + props.userNickname },
-              "User profile"
+                "div",
+                { className: "btn-group dropup" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    { type: "button", className: "btn btn-secondary" },
+                    "Dropup"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    {
+                        type: "button",
+                        className: "btn btn-secondary dropdown-toggle",
+                        "data-toggle": "dropdown",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "false"
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "span",
+                        { className: "sr-only" },
+                        "Toggle Dropdown"
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "dropdown-menu" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "p",
+                        null,
+                        props.userNickname
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "li",
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                            { to: "/profile/" + props.userNickname },
+                            "User profile"
+                        )
+                    )
+                )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "p",
+                null,
+                props.userNickname,
+                " wrote ",
+                props.date,
+                ":",
+                " "
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "p",
+                null,
+                props.commentBody
             )
-          )
         )
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "p",
-        null,
-        props.userNickname,
-        " (",
-        props.userEmail,
-        ") wrote ",
-        props.date,
-        ":",
-        " "
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "p",
-        null,
-        props.commentBody
-      )
-    )
-  );
+    );
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Comment);
@@ -34509,6 +34546,8 @@ var Comment = function Comment(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -34522,6 +34561,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -34597,7 +34637,7 @@ var CommentForm = function (_Component) {
 
                                 commentDate = year + "-" + month + "-" + date1;
                                 _context.next = 9;
-                                return axios.post("http://127.0.0.1:8000/api/comment", {
+                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comment", {
                                     userId: sessionStorage.getItem("userId"),
                                     userNickName: this.state.loggedInUserNickname,
                                     meetingId: this.props.meetingId,
@@ -34610,7 +34650,7 @@ var CommentForm = function (_Component) {
 
 
                                 if (savedComment.status == "200") {
-                                    window.location.reload();
+                                    this.props.addCommentToState(this.state.loggedInUserNickname, commentDate, this.state.commentBody);
                                     alert("You wrote a comment.");
                                 } else {
                                     alert("Sorry we can't handle that. Please repeat for a while.");

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class CommentForm extends Component {
     constructor(props) {
@@ -66,7 +67,11 @@ class CommentForm extends Component {
         );
 
         if (savedComment.status == "200") {
-            window.location.reload();
+            this.props.addCommentToState(
+                this.state.loggedInUserNickname,
+                commentDate,
+                this.state.commentBody
+            );
             alert("You wrote a comment.");
         } else {
             alert("Sorry we can't handle that. Please repeat for a while.");

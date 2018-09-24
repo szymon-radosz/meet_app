@@ -23,6 +23,7 @@ class SingleMeetingDetails extends Component {
 
         this.takePartClick = this.takePartClick.bind(this);
         this.resignClick = this.resignClick.bind(this);
+        this.addCommentToState = this.addCommentToState.bind(this);
     }
 
     handleChange(event) {
@@ -31,7 +32,6 @@ class SingleMeetingDetails extends Component {
     }
 
     async componentDidMount() {
-        //console.log(this.props.meetingId);
         const getUser = await axios.get(
             `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
         );
@@ -42,7 +42,7 @@ class SingleMeetingDetails extends Component {
         const getCurrentMeetingInfo = await axios.get(
             `http://127.0.0.1:8000/api/meeting/${this.props.meetingId}`
         );
-        //console.log(getCurrentMeetingInfo.data[0]);
+
         let meetingLimit = getCurrentMeetingInfo.data[0].limit;
 
         let usersIDs = [];
@@ -52,8 +52,6 @@ class SingleMeetingDetails extends Component {
         );
 
         let meetingMatched = 0;
-
-        //console.log(allMatches);
 
         for (var i = 0; i < allMatches.data.length; i++) {
             if (_.contains(allMatches.data[i], this.props.meetingId)) {
@@ -78,8 +76,6 @@ class SingleMeetingDetails extends Component {
             this.setState({ displayTakPartBtn: true });
         }
 
-        //console.log(usersIDs);
-
         usersIDs.map(async (userId, i) => {
             const allUsers = await axios.get(`http://127.0.0.1:8000/api/users`);
 
@@ -89,8 +85,6 @@ class SingleMeetingDetails extends Component {
                         email: allUsers.data[i].email,
                         id: allUsers.data[i].id
                     };
-
-                    //console.log(userObject);
 
                     this.setState(prevState => ({
                         usersEmails: [...prevState.usersEmails, userObject]
@@ -118,13 +112,13 @@ class SingleMeetingDetails extends Component {
         }
 
         ResignedUsersIDs.map(async (userID, i) => {
-            const allUsers = await axios.get(
+            const user = await axios.get(
                 `http://127.0.0.1:8000/api/user/${userID}`
             );
 
             let userObject = {
-                email: allUsers.data.email,
-                id: allUsers.data.id
+                email: user.data.email,
+                id: user.data.id
             };
 
             this.setState(prevState => ({
@@ -190,11 +184,33 @@ class SingleMeetingDetails extends Component {
             );
 
             if (savedMatchUserWithMeeting.status == "200") {
-                //reload window to lost data
-                window.location.reload();
-                alert(
-                    "You are saved to that meeting. Now you can write comments."
+                //if successful then find user and add him/her to userId array/ update state
+                const user = await axios.get(
+                    `http://127.0.0.1:8000/api/user/${sessionStorage.getItem(
+                        "userId"
+                    )}`
                 );
+
+                if (user.status == 200) {
+                    let userObject = {
+                        email: user.data.email,
+                        id: user.data.id
+                    };
+
+                    this.setState(prevState => ({
+                        usersEmails: [...prevState.usersEmails, userObject]
+                    }));
+                    this.setState({
+                        displayTakPartBtn: false,
+                        displayResignBtn: true,
+                        displayCommentsContainer: true
+                    });
+                    alert(
+                        "You are saved to that meeting. Now you can write comments."
+                    );
+                } else {
+                    alert("Troubles with adding user to tak part.");
+                }
             } else {
                 alert("Sorry we can't handle that. Please repeat for a while.");
             }
@@ -249,6 +265,18 @@ class SingleMeetingDetails extends Component {
                 }
             }
         }
+    }
+
+    addCommentToState(userNickname, commentDate, commentBody) {
+        let commentObject = {
+            userNickname: userNickname,
+            date: commentDate,
+            commentBody: commentBody
+        };
+
+        this.setState(prevState => ({
+            comments: [...prevState.comments, commentObject]
+        }));
     }
 
     render() {
@@ -319,9 +347,6 @@ class SingleMeetingDetails extends Component {
                                           userNickname={
                                               this.state.loggedInUserNickname
                                           }
-                                          userEmail={
-                                              this.state.loggedInUserEmail
-                                          }
                                           date={comment.date}
                                           commentBody={comment.commentBody}
                                       />
@@ -336,6 +361,7 @@ class SingleMeetingDetails extends Component {
                                 this.state.loggedInUserNickname
                             }
                             meetingId={this.props.meetingId}
+                            addCommentToState={this.addCommentToState}
                         />
                     ) : (
                         ""
