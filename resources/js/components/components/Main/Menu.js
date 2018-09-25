@@ -16,11 +16,18 @@ class Menu extends Component {
         this.state = {
             userIsLoggedIn: false,
             loggedInUserEmail: "",
-            loggedInUserNickName: ""
+            loggedInUserNickName: "",
+            searchInLocation: ""
         };
 
         this.loginUser = this.loginUser.bind(this);
         this.logout = this.logout.bind(this);
+        this.changeStateOfSearchInLocation = this.changeStateOfSearchInLocation.bind(
+            this
+        );
+        this.cleanStateOfSearchInLocation = this.cleanStateOfSearchInLocation.bind(
+            this
+        );
     }
 
     async componentDidMount() {
@@ -51,6 +58,18 @@ class Menu extends Component {
         this.setState({ loggedInUserNickName: "" });
     }
 
+    changeStateOfSearchInLocation(value) {
+        this.setState({
+            searchInLocation: value
+        });
+    }
+
+    cleanStateOfSearchInLocation() {
+        this.setState({
+            searchInLocation: ""
+        });
+    }
+
     render() {
         return (
             <Router>
@@ -73,7 +92,11 @@ class Menu extends Component {
                                     <span className="icon-bar" />
                                     <span className="icon-bar" />
                                 </button>
-                                <Link to="/" className="navbar-brand">
+                                <Link
+                                    to="/"
+                                    className="navbar-brand"
+                                    onClick={this.cleanStateOfSearchInLocation}
+                                >
                                     Home
                                 </Link>
                             </div>
@@ -84,14 +107,28 @@ class Menu extends Component {
                                 <ul className="nav navbar-nav navbar-right">
                                     {this.state.userIsLoggedIn ? (
                                         <li>
-                                            <Link to="/meetings">Meetings</Link>
+                                            <Link
+                                                to="/meetings"
+                                                onClick={
+                                                    this
+                                                        .cleanStateOfSearchInLocation
+                                                }
+                                            >
+                                                Meetings
+                                            </Link>
                                         </li>
                                     ) : (
                                         ""
                                     )}
                                     {this.state.userIsLoggedIn ? (
                                         <li>
-                                            <Link to="/add-meeting">
+                                            <Link
+                                                to="/add-meeting"
+                                                onClick={
+                                                    this
+                                                        .cleanStateOfSearchInLocation
+                                                }
+                                            >
                                                 Add meetings
                                             </Link>
                                         </li>
@@ -99,10 +136,26 @@ class Menu extends Component {
                                         ""
                                     )}
                                     <li>
-                                        <Link to="/login">Login</Link>
+                                        <Link
+                                            to="/login"
+                                            onClick={
+                                                this
+                                                    .cleanStateOfSearchInLocation
+                                            }
+                                        >
+                                            Login
+                                        </Link>
                                     </li>
                                     <li>
-                                        <Link to="/register">Register</Link>
+                                        <Link
+                                            to="/register"
+                                            onClick={
+                                                this
+                                                    .cleanStateOfSearchInLocation
+                                            }
+                                        >
+                                            Register
+                                        </Link>
                                     </li>
                                     {this.state.userIsLoggedIn ? (
                                         <li>
@@ -129,6 +182,10 @@ class Menu extends Component {
                                                             this.state
                                                                 .loggedInUserNickName
                                                         }`}
+                                                        onClick={
+                                                            this
+                                                                .cleanStateOfSearchInLocation
+                                                        }
                                                     >
                                                         My profile
                                                     </Link>
@@ -143,7 +200,22 @@ class Menu extends Component {
                         </div>
                     </nav>
 
-                    <Route exact path="/" component={LandingPage} />
+                    <Route
+                        exact
+                        path="/"
+                        render={() => {
+                            return (
+                                <LandingPage
+                                    searchInLocation={
+                                        this.state.searchInLocation
+                                    }
+                                    changeStateOfSearchInLocation={
+                                        this.changeStateOfSearchInLocation
+                                    }
+                                />
+                            );
+                        }}
+                    />
                     <Route
                         exact
                         path="/login"
@@ -158,7 +230,20 @@ class Menu extends Component {
                             return <Register loginUser={this.loginUser} />;
                         }}
                     />
-                    <Route path="/meetings" component={MainMeetings} />
+
+                    <Route
+                        exact
+                        path="/meetings"
+                        render={() => {
+                            return (
+                                <MainMeetings
+                                    searchInLocation={
+                                        this.state.searchInLocation
+                                    }
+                                />
+                            );
+                        }}
+                    />
                     <Route path="/meeting/:id" component={MeetingDetails} />
                     <Route path="/profile/:nickname" component={MainProfile} />
                     <Route path="/add-meeting" component={AddNewMeeting} />

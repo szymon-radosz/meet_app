@@ -51,37 +51,43 @@ class MainMeetings extends Component {
     render() {
         return (
             <div className="row listOfMeetingsRow">
-                <div className="col-sm-6 listOfMeetingsCol">
-                    {this.state.meetingsData.map((item, i) => {
-                        return (
-                            <SingleMeetingOnList
-                                key={i}
-                                changeMarker={this.changeMarker}
-                                id={item.id}
-                                title={item.title}
-                                description={item.description}
-                                author={item.author}
-                                lattitude={item.lattitude}
-                                longitude={item.longitude}
-                                category={item.category}
-                                limit={item.limit}
-                                date={item.date}
-                                time={item.time}
-                                setCoordinates={this.setCoordinates}
+                {this.props.searchInLocation ? (
+                    "searchInLocation istnieje"
+                ) : (
+                    <div>
+                        <div className="col-sm-6 listOfMeetingsCol">
+                            {this.state.meetingsData.map((item, i) => {
+                                return (
+                                    <SingleMeetingOnList
+                                        key={i}
+                                        changeMarker={this.changeMarker}
+                                        id={item.id}
+                                        title={item.title}
+                                        description={item.description}
+                                        author={item.author}
+                                        lattitude={item.lattitude}
+                                        longitude={item.longitude}
+                                        category={item.category}
+                                        limit={item.limit}
+                                        date={item.date}
+                                        time={item.time}
+                                        setCoordinates={this.setCoordinates}
+                                    />
+                                );
+                            })}
+                        </div>
+                        <div
+                            className="col-sm-6 mainMeetingsMap"
+                            style={{ height: "calc(100vh - 60px)" }}
+                        >
+                            <MapComponent
+                                meetingsData={this.state.meetingsData}
+                                latCenter={this.state.lat}
+                                lngCenter={this.state.lng}
                             />
-                        );
-                    })}
-                </div>
-                <div
-                    className="col-sm-6 mainMeetingsMap"
-                    style={{ height: "calc(100vh - 60px)" }}
-                >
-                    <MapComponent
-                        meetingsData={this.state.meetingsData}
-                        latCenter={this.state.lat}
-                        lngCenter={this.state.lng}
-                    />
-                </div>
+                        </div>{" "}
+                    </div>
+                )}
             </div>
         );
     }

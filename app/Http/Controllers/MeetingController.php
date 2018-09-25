@@ -40,7 +40,12 @@ class MeetingController extends Controller
         return $singleMeeting;
     }
 
-
+    /*public function findByLocation($location)
+    {
+        $singleMeeting = DB::table('meetings')->where('email', Input::get('email'))
+        ->orWhere('name', 'like', '%' . Input::get('name') . '%')->get();
+        return $singleMeeting;
+    }*/
 
     public function destroy($id)
     {
