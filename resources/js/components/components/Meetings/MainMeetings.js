@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import SingleMeetingOnList from "./SingleMeetingOnList.js";
+import SingleMeetingOnList from "./MeetingsListComponents/SingleMeetingOnList.js";
 import MapComponent from "./MapComponent.js";
 
 class MainMeetings extends Component {

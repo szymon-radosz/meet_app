@@ -31374,7 +31374,7 @@ var Register = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SingleMeetingOnList_js__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__MapComponent_js__ = __webpack_require__(41);
 
 
@@ -31486,7 +31486,7 @@ var MainMeetings = function (_Component) {
                     "div",
                     { className: "col-sm-6 listOfMeetingsCol" },
                     this.state.meetingsData.map(function (item, i) {
-                        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__SingleMeetingOnList_js__["a" /* default */], {
+                        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__MeetingsListComponents_SingleMeetingOnList_js__["a" /* default */], {
                             key: i,
                             changeMarker: _this3.changeMarker,
                             id: item.id,
@@ -31525,179 +31525,8 @@ var MainMeetings = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (MainMeetings);
 
 /***/ }),
-/* 113 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocateOnMapBtn__ = __webpack_require__(114);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-var SingleMeetingOnList = function (_Component) {
-    _inherits(SingleMeetingOnList, _Component);
-
-    function SingleMeetingOnList(props) {
-        _classCallCheck(this, SingleMeetingOnList);
-
-        var _this = _possibleConstructorReturn(this, (SingleMeetingOnList.__proto__ || Object.getPrototypeOf(SingleMeetingOnList)).call(this, props));
-
-        _this.state = {
-            lat: "",
-            lng: ""
-        };
-
-        _this.sendCoordinatesToMainMeetings = _this.sendCoordinatesToMainMeetings.bind(_this);
-        return _this;
-    }
-
-    _createClass(SingleMeetingOnList, [{
-        key: "sendCoordinatesToMainMeetings",
-        value: function sendCoordinatesToMainMeetings() {
-            this.props.setCoordinates(this.props.lattitude, this.props.longitude);
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "panel-group" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "panel panel-default" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "panel-heading" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "h4",
-                            { className: "panel-title bold" },
-                            this.props.title,
-                            " - ",
-                            this.props.category
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "panel-body" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "p",
-                            null,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "span",
-                                { className: "bold" },
-                                "Date: "
-                            ),
-                            this.props.date,
-                            " ",
-                            this.props.time
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "p",
-                            null,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "span",
-                                { className: "bold" },
-                                "Description: "
-                            ),
-                            this.props.description
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "p",
-                            null,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "span",
-                                { className: "bold" },
-                                "Created by: "
-                            ),
-                            this.props.author
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "p",
-                            null,
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "span",
-                                { className: "bold" },
-                                "Limit: "
-                            ),
-                            this.props.limit
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: "/meeting/" + this.props.id },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "div",
-                                { className: "btn meetingDetailsBtn" },
-                                "Details"
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__LocateOnMapBtn__["a" /* default */], {
-                            setCoordinate: this.sendCoordinatesToMainMeetings
-                        })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return SingleMeetingOnList;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (SingleMeetingOnList);
-
-/***/ }),
-/* 114 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var LocateOnMapBtn = function (_Component) {
-  _inherits(LocateOnMapBtn, _Component);
-
-  function LocateOnMapBtn(props) {
-    _classCallCheck(this, LocateOnMapBtn);
-
-    return _possibleConstructorReturn(this, (LocateOnMapBtn.__proto__ || Object.getPrototypeOf(LocateOnMapBtn)).call(this, props));
-  }
-
-  _createClass(LocateOnMapBtn, [{
-    key: "render",
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: "btn locateBtn", onClick: this.props.setCoordinate },
-        "Locate on map"
-      );
-    }
-  }]);
-
-  return LocateOnMapBtn;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (LocateOnMapBtn);
-
-/***/ }),
+/* 113 */,
+/* 114 */,
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -33784,8 +33613,8 @@ var MeetingDetails = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_underscore__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__singleMeetingComponents_Comment__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__singleMeetingComponents_CommentForm__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_Comment__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SingleMeetingComponents_CommentForm__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__MapComponent_js__ = __webpack_require__(41);
 
 
@@ -34336,14 +34165,14 @@ var SingleMeetingDetails = function (_Component) {
                         )
                     ),
                     this.state.displayCommentsContainer ? this.state.comments.slice(0).reverse().map(function (comment, i) {
-                        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__singleMeetingComponents_Comment__["a" /* default */], {
+                        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__SingleMeetingComponents_Comment__["a" /* default */], {
                             key: i,
                             userNickname: _this3.state.loggedInUserNickname,
                             date: comment.date,
                             commentBody: comment.commentBody
                         });
                     }) : "",
-                    this.state.displayCommentsContainer ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__singleMeetingComponents_CommentForm__["a" /* default */], {
+                    this.state.displayCommentsContainer ? __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__SingleMeetingComponents_CommentForm__["a" /* default */], {
                         loggedInUserEmail: this.state.loggedInUserEmail,
                         loggedInUserNickname: this.state.loggedInUserNickname,
                         meetingId: this.props.meetingId,
@@ -34371,260 +34200,8 @@ var SingleMeetingDetails = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (SingleMeetingDetails);
 
 /***/ }),
-/* 129 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(17);
-
-
-
-var Comment = function Comment(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: "panel panel-default" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "div",
-            { className: "panel-body" },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "btn-group dropup" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    { type: "button", className: "btn btn-secondary" },
-                    "Dropup"
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    {
-                        type: "button",
-                        className: "btn btn-secondary dropdown-toggle",
-                        "data-toggle": "dropdown",
-                        "aria-haspopup": "true",
-                        "aria-expanded": "false"
-                    },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "span",
-                        { className: "sr-only" },
-                        "Toggle Dropdown"
-                    )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "dropdown-menu" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "p",
-                        null,
-                        props.userNickname
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "li",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
-                            { to: "/profile/" + props.userNickname },
-                            "User profile"
-                        )
-                    )
-                )
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "p",
-                null,
-                props.userNickname,
-                " wrote ",
-                props.date,
-                ":",
-                " "
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "p",
-                null,
-                props.commentBody
-            )
-        )
-    );
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (Comment);
-
-/***/ }),
-/* 130 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var CommentForm = function (_Component) {
-    _inherits(CommentForm, _Component);
-
-    function CommentForm(props) {
-        _classCallCheck(this, CommentForm);
-
-        var _this = _possibleConstructorReturn(this, (CommentForm.__proto__ || Object.getPrototypeOf(CommentForm)).call(this, props));
-
-        _this.state = {
-            commentBody: "",
-            loggedInUserNickname: "",
-            meetingId: ""
-        };
-
-        _this.handleChange = _this.handleChange.bind(_this);
-        _this.submitComment = _this.submitComment.bind(_this);
-        return _this;
-    }
-
-    _createClass(CommentForm, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.setState({
-                loggedInUserNickname: this.props.loggedInUserNickname,
-                meetingId: this.props.meetingId
-            });
-        }
-    }, {
-        key: "handleChange",
-        value: function handleChange(event) {
-            var _event$target = event.target,
-                name = _event$target.name,
-                value = _event$target.value;
-
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: "submitComment",
-        value: function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
-                var time, year, month, date1, commentDate, savedComment;
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                event.preventDefault();
-
-                                time = new Date();
-                                year = time.getFullYear();
-                                month = time.getMonth() + 1;
-                                date1 = time.getDate();
-                                /*const hour = time.getHours();
-                                const minutes = time.getMinutes();
-                                const seconds = time.getSeconds();*/
-
-                                /*const commentDate =
-                                    date1 +
-                                    "-" +
-                                    month +
-                                    "-" +
-                                    year +
-                                    " " +
-                                    hour +
-                                    ":" +
-                                    minutes +
-                                    ":" +
-                                    seconds;*/
-
-                                commentDate = year + "-" + month + "-" + date1;
-                                _context.next = 8;
-                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comment", {
-                                    userId: sessionStorage.getItem("userId"),
-                                    userNickName: this.state.loggedInUserNickname,
-                                    meetingId: this.props.meetingId,
-                                    date: commentDate,
-                                    commentBody: this.state.commentBody
-                                });
-
-                            case 8:
-                                savedComment = _context.sent;
-
-
-                                if (savedComment.status == "200") {
-                                    this.props.addCommentToState(this.state.loggedInUserNickname, commentDate, this.state.commentBody);
-                                    alert("You wrote a comment.");
-                                } else {
-                                    alert("Sorry we can't handle that. Please repeat for a while.");
-                                }
-
-                            case 10:
-                            case "end":
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function submitComment(_x) {
-                return _ref.apply(this, arguments);
-            }
-
-            return submitComment;
-        }()
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                "div",
-                null,
-                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                    "form",
-                    { onSubmit: this.submitComment },
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "div",
-                        { className: "form-group" },
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                            "label",
-                            { htmlFor: "commentBody" },
-                            "Write a comment like a",
-                            " ",
-                            this.props.loggedInUserNickName
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("textarea", {
-                            maxLength: "150",
-                            className: "form-control",
-                            name: "commentBody",
-                            id: "commentBody",
-                            rows: "3",
-                            onChange: this.handleChange
-                        })
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-                        "button",
-                        { type: "submit", className: "btn btn-default" },
-                        "Send a comment"
-                    )
-                )
-            );
-        }
-    }]);
-
-    return CommentForm;
-}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (CommentForm);
-
-/***/ }),
+/* 129 */,
+/* 130 */,
 /* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -34877,6 +34454,434 @@ function unregister() {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 134 */,
+/* 135 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(17);
+
+
+
+var Comment = function Comment(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "panel panel-default" },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "panel-body" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "btn-group dropup" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    { type: "button", className: "btn btn-secondary" },
+                    "Dropup"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    {
+                        type: "button",
+                        className: "btn btn-secondary dropdown-toggle",
+                        "data-toggle": "dropdown",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "false"
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "span",
+                        { className: "sr-only" },
+                        "Toggle Dropdown"
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "dropdown-menu" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "p",
+                        null,
+                        props.userNickname
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "li",
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                            { to: "/profile/" + props.userNickname },
+                            "User profile"
+                        )
+                    )
+                )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "p",
+                null,
+                props.userNickname,
+                " wrote ",
+                props.date,
+                ":",
+                " "
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "p",
+                null,
+                props.commentBody
+            )
+        )
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (Comment);
+
+/***/ }),
+/* 136 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var CommentForm = function (_Component) {
+    _inherits(CommentForm, _Component);
+
+    function CommentForm(props) {
+        _classCallCheck(this, CommentForm);
+
+        var _this = _possibleConstructorReturn(this, (CommentForm.__proto__ || Object.getPrototypeOf(CommentForm)).call(this, props));
+
+        _this.state = {
+            commentBody: "",
+            loggedInUserNickname: "",
+            meetingId: ""
+        };
+
+        _this.handleChange = _this.handleChange.bind(_this);
+        _this.submitComment = _this.submitComment.bind(_this);
+        return _this;
+    }
+
+    _createClass(CommentForm, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.setState({
+                loggedInUserNickname: this.props.loggedInUserNickname,
+                meetingId: this.props.meetingId
+            });
+        }
+    }, {
+        key: "handleChange",
+        value: function handleChange(event) {
+            var _event$target = event.target,
+                name = _event$target.name,
+                value = _event$target.value;
+
+            this.setState(_defineProperty({}, name, value));
+        }
+    }, {
+        key: "submitComment",
+        value: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(event) {
+                var time, year, month, date1, commentDate, savedComment;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                event.preventDefault();
+
+                                time = new Date();
+                                year = time.getFullYear();
+                                month = time.getMonth() + 1;
+                                date1 = time.getDate();
+                                /*const hour = time.getHours();
+                                const minutes = time.getMinutes();
+                                const seconds = time.getSeconds();*/
+
+                                /*const commentDate =
+                                    date1 +
+                                    "-" +
+                                    month +
+                                    "-" +
+                                    year +
+                                    " " +
+                                    hour +
+                                    ":" +
+                                    minutes +
+                                    ":" +
+                                    seconds;*/
+
+                                commentDate = year + "-" + month + "-" + date1;
+                                _context.next = 8;
+                                return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post("http://127.0.0.1:8000/api/comment", {
+                                    userId: sessionStorage.getItem("userId"),
+                                    userNickName: this.state.loggedInUserNickname,
+                                    meetingId: this.props.meetingId,
+                                    date: commentDate,
+                                    commentBody: this.state.commentBody
+                                });
+
+                            case 8:
+                                savedComment = _context.sent;
+
+
+                                if (savedComment.status == "200") {
+                                    this.props.addCommentToState(this.state.loggedInUserNickname, commentDate, this.state.commentBody);
+                                    alert("You wrote a comment.");
+                                } else {
+                                    alert("Sorry we can't handle that. Please repeat for a while.");
+                                }
+
+                            case 10:
+                            case "end":
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function submitComment(_x) {
+                return _ref.apply(this, arguments);
+            }
+
+            return submitComment;
+        }()
+    }, {
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                "div",
+                null,
+                __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                    "form",
+                    { onSubmit: this.submitComment },
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                        "div",
+                        { className: "form-group" },
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                            "label",
+                            { htmlFor: "commentBody" },
+                            "Write a comment like a",
+                            " ",
+                            this.props.loggedInUserNickName
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("textarea", {
+                            maxLength: "150",
+                            className: "form-control",
+                            name: "commentBody",
+                            id: "commentBody",
+                            rows: "3",
+                            onChange: this.handleChange
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+                        "button",
+                        { type: "submit", className: "btn btn-default" },
+                        "Send a comment"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return CommentForm;
+}(__WEBPACK_IMPORTED_MODULE_1_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (CommentForm);
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var LocateOnMapBtn = function (_Component) {
+  _inherits(LocateOnMapBtn, _Component);
+
+  function LocateOnMapBtn(props) {
+    _classCallCheck(this, LocateOnMapBtn);
+
+    return _possibleConstructorReturn(this, (LocateOnMapBtn.__proto__ || Object.getPrototypeOf(LocateOnMapBtn)).call(this, props));
+  }
+
+  _createClass(LocateOnMapBtn, [{
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "btn locateBtn", onClick: this.props.setCoordinate },
+        "Locate on map"
+      );
+    }
+  }]);
+
+  return LocateOnMapBtn;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (LocateOnMapBtn);
+
+/***/ }),
+/* 138 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocateOnMapBtn__ = __webpack_require__(137);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var SingleMeetingOnList = function (_Component) {
+    _inherits(SingleMeetingOnList, _Component);
+
+    function SingleMeetingOnList(props) {
+        _classCallCheck(this, SingleMeetingOnList);
+
+        var _this = _possibleConstructorReturn(this, (SingleMeetingOnList.__proto__ || Object.getPrototypeOf(SingleMeetingOnList)).call(this, props));
+
+        _this.state = {
+            lat: "",
+            lng: ""
+        };
+
+        _this.sendCoordinatesToMainMeetings = _this.sendCoordinatesToMainMeetings.bind(_this);
+        return _this;
+    }
+
+    _createClass(SingleMeetingOnList, [{
+        key: "sendCoordinatesToMainMeetings",
+        value: function sendCoordinatesToMainMeetings() {
+            this.props.setCoordinates(this.props.lattitude, this.props.longitude);
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "panel-group" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "panel panel-default" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "panel-heading" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "h4",
+                            { className: "panel-title bold" },
+                            this.props.title,
+                            " - ",
+                            this.props.category
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "panel-body" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "p",
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "span",
+                                { className: "bold" },
+                                "Date: "
+                            ),
+                            this.props.date,
+                            " ",
+                            this.props.time
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "p",
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "span",
+                                { className: "bold" },
+                                "Description: "
+                            ),
+                            this.props.description
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "p",
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "span",
+                                { className: "bold" },
+                                "Created by: "
+                            ),
+                            this.props.author
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "p",
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "span",
+                                { className: "bold" },
+                                "Limit: "
+                            ),
+                            this.props.limit
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                            { to: "/meeting/" + this.props.id },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "btn meetingDetailsBtn" },
+                                "Details"
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__LocateOnMapBtn__["a" /* default */], {
+                            setCoordinate: this.sendCoordinatesToMainMeetings
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return SingleMeetingOnList;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (SingleMeetingOnList);
 
 /***/ })
 /******/ ]);

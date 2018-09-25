@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import _ from "underscore";
-import Comment from "./singleMeetingComponents/Comment";
-import CommentForm from "./singleMeetingComponents/CommentForm";
+import Comment from "./SingleMeetingComponents/Comment";
+import CommentForm from "./SingleMeetingComponents/CommentForm";
 import MapComponent from "./MapComponent.js";
 
 class SingleMeetingDetails extends Component {
