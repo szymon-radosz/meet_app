@@ -34,9 +34,9 @@ class Login extends Component {
             sessionStorage.setItem("userId", loginUser.data.userId);
             sessionStorage.setItem("userNickName", loginUser.data.userNickName);
             this.props.loginUser(loginUser.data.userNickName);
-            alert("Thank you. Let's find new friends");
+            this.props.showAlertSuccess("Thank you. Let's find new friends");
         } else {
-            alert("wrong password for that account");
+            this.props.showAlertWarning("wrong password for that account");
         }
     }
 

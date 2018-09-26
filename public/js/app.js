@@ -26138,19 +26138,107 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Main = function (_Component) {
     _inherits(Main, _Component);
 
-    function Main() {
+    function Main(props) {
         _classCallCheck(this, Main);
 
-        return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+        _this.state = {
+            alertSuccess: false,
+            alertSuccessDescription: "",
+            alertWarning: false,
+            alertWarningDescription: ""
+        };
+
+        _this.showAlertSuccess = _this.showAlertSuccess.bind(_this);
+        _this.showAlertWarning = _this.showAlertWarning.bind(_this);
+        _this.hideAlertSuccess = _this.hideAlertSuccess.bind(_this);
+        _this.hideAlertWarning = _this.hideAlertWarning.bind(_this);
+        return _this;
     }
 
     _createClass(Main, [{
+        key: "showAlertSuccess",
+        value: function showAlertSuccess(info) {
+            this.setState({
+                alertSuccess: true,
+                alertSuccessDescription: info
+            });
+        }
+    }, {
+        key: "showAlertWarning",
+        value: function showAlertWarning(info) {
+            this.setState({
+                alertWarning: true,
+                alertWarningDescription: info
+            });
+        }
+    }, {
+        key: "hideAlertSuccess",
+        value: function hideAlertSuccess() {
+            this.setState({
+                alertSuccess: false
+            });
+        }
+    }, {
+        key: "hideAlertWarning",
+        value: function hideAlertWarning() {
+            this.setState({
+                alertWarning: false
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], null)
+                this.state.alertSuccess && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        className: "alert alert-success alert-dismissible",
+                        role: "alert"
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "a",
+                        {
+                            href: "#",
+                            className: "close",
+                            onClick: this.hideAlertSuccess
+                        },
+                        "\xD7"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "strong",
+                        null,
+                        this.state.alertSuccessDescription
+                    )
+                ),
+                this.state.alertWarning && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    {
+                        className: "alert alert-danger alert-dismissible",
+                        role: "alert"
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "a",
+                        {
+                            href: "#",
+                            className: "close",
+                            onClick: this.hideAlertWarning
+                        },
+                        "\xD7"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "strong",
+                        null,
+                        this.state.alertWarningDescription
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Menu_js__["a" /* default */], {
+                    showAlertSuccess: this.showAlertSuccess,
+                    showAlertWarning: this.showAlertWarning
+                })
             );
         }
     }]);
@@ -26180,6 +26268,8 @@ var Main = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__ = __webpack_require__(169);
 
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -26275,7 +26365,7 @@ var Menu = function (_Component) {
         value: function logout() {
             sessionStorage.setItem("userId", "");
             sessionStorage.setItem("userNickName", "");
-            alert("You're sucessfully logout");
+            this.props.showAlertSuccess("You're sucessfully logout");
             this.setState({ userIsLoggedIn: false });
             this.setState({ loggedInUserNickName: "" });
         }
@@ -26457,14 +26547,22 @@ var Menu = function (_Component) {
                         exact: true,
                         path: "/login",
                         render: function render() {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Account_Login_js__["a" /* default */], { loginUser: _this2.loginUser });
+                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Account_Login_js__["a" /* default */], {
+                                loginUser: _this2.loginUser,
+                                showAlertSuccess: _this2.props.showAlertSuccess,
+                                showAlertWarning: _this2.props.showAlertWarning
+                            });
                         }
                     }),
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
                         exact: true,
                         path: "/register",
                         render: function render() {
-                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Account_Register_js__["a" /* default */], { loginUser: _this2.loginUser });
+                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Account_Register_js__["a" /* default */], {
+                                loginUser: _this2.loginUser,
+                                showAlertSuccess: _this2.props.showAlertSuccess,
+                                showAlertWarning: _this2.props.showAlertWarning
+                            });
                         }
                     }),
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
@@ -26476,9 +26574,27 @@ var Menu = function (_Component) {
                             });
                         }
                     }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: "/meeting/:id", component: __WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__["a" /* default */] }),
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+                        exact: true,
+                        path: "/meeting/:id",
+                        render: function render(props) {
+                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_9__Meetings_MeetingDetails_js__["a" /* default */], _extends({}, props, {
+                                showAlertSuccess: _this2.props.showAlertSuccess,
+                                showAlertWarning: _this2.props.showAlertWarning
+                            }));
+                        }
+                    }),
                     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: "/profile/:nickname", component: __WEBPACK_IMPORTED_MODULE_10__Profile_MainProfile_js__["a" /* default */] }),
-                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: "/add-meeting", component: __WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */] })
+                    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], {
+                        exact: true,
+                        path: "/add-meeting",
+                        render: function render() {
+                            return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Meetings_AddNewMeeting_js__["a" /* default */], {
+                                showAlertSuccess: _this2.props.showAlertSuccess,
+                                showAlertWarning: _this2.props.showAlertWarning
+                            });
+                        }
+                    })
                 )
             );
         }
@@ -30988,9 +31104,9 @@ var Login = function (_Component) {
                                     sessionStorage.setItem("userId", loginUser.data.userId);
                                     sessionStorage.setItem("userNickName", loginUser.data.userNickName);
                                     this.props.loginUser(loginUser.data.userNickName);
-                                    alert("Thank you. Let's find new friends");
+                                    this.props.showAlertSuccess("Thank you. Let's find new friends");
                                 } else {
-                                    alert("wrong password for that account");
+                                    this.props.showAlertWarning("wrong password for that account");
                                 }
 
                             case 5:
@@ -31210,7 +31326,7 @@ var Register = function (_Component) {
                                     break;
                                 }
 
-                                alert("You can't use whitespace in your nickname");
+                                this.props.showAlertWarning("You can't use whitespace in your nickname");
                                 _context.next = 27;
                                 break;
 
@@ -31243,7 +31359,7 @@ var Register = function (_Component) {
                                     break;
                                 }
 
-                                alert("user with email " + this.state.email + " already exists");
+                                this.props.showAlertWarning("user with email " + this.state.email + " already exists");
                                 _context.next = 24;
                                 break;
 
@@ -31253,7 +31369,7 @@ var Register = function (_Component) {
                                     break;
                                 }
 
-                                alert("user with nickname " + this.state.nickName + " already exists");
+                                this.props.showAlertWarning("user with nickname " + this.state.nickName + " already exists");
                                 _context.next = 24;
                                 break;
 
@@ -31281,9 +31397,9 @@ var Register = function (_Component) {
                                     sessionStorage.setItem("userId", savedUser.data.userId);
                                     sessionStorage.setItem("userNickName", savedUser.data.userNickName);
                                     this.props.loginUser(savedUser.data.userNickName);
-                                    alert("Thank you. You created an account");
+                                    this.props.showAlertSuccess("Thank you. You created an account");
                                 } else {
-                                    alert("Sorry we can't handle that. Please repeat for a while.");
+                                    this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
                                 }
 
                             case 24:
@@ -31291,7 +31407,7 @@ var Register = function (_Component) {
                                 break;
 
                             case 26:
-                                alert("Sorry password and confirmation doesn't match ");
+                                this.props.showAlertWarning("Sorry password and confirmation doesn't match ");
 
                             case 27:
                             case "end":
@@ -33495,7 +33611,7 @@ var AddNewMeeting = function (_Component) {
                                     break;
                                 }
 
-                                alert("Please choose the limit of users.");
+                                this.props.showAlertWarning("Please choose the limit of users.");
                                 _context.next = 23;
                                 break;
 
@@ -33505,7 +33621,7 @@ var AddNewMeeting = function (_Component) {
                                     break;
                                 }
 
-                                alert("Please choose the category.");
+                                this.props.showAlertWarning("Please choose the category.");
                                 _context.next = 23;
                                 break;
 
@@ -33546,15 +33662,15 @@ var AddNewMeeting = function (_Component) {
 
 
                                 if (savedMatchUserWithMeeting.status == "200") {
-                                    alert("You added new meeting");
+                                    this.props.showAlertSuccess("You added new meeting");
                                 } else {
-                                    alert("Sorry we can't handle that. Please repeat for a while.");
+                                    this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
                                 }
                                 _context.next = 23;
                                 break;
 
                             case 22:
-                                alert("Sorry we can't handle that. Please repeat for a while.");
+                                this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
 
                             case 23:
                             case "end":
@@ -33895,7 +34011,9 @@ var MeetingDetails = function (_Component) {
                         limit: item.limit,
                         date: item.date,
                         time: item.time,
-                        meetingId: _this2.state.meetingID
+                        meetingId: _this2.state.meetingID,
+                        showAlertSuccess: _this2.props.showAlertSuccess,
+                        showAlertWarning: _this2.props.showAlertWarning
                     });
                 })
             );
@@ -33992,27 +34110,28 @@ var SingleMeetingDetails = function (_Component) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
-                                _context3.next = 2;
+                                console.log(this.props.meetingId);
+                                _context3.next = 3;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/user/" + sessionStorage.getItem("userId"));
 
-                            case 2:
+                            case 3:
                                 getUser = _context3.sent;
 
 
                                 this.setState({ loggedInUserEmail: getUser.data[0].email });
                                 this.setState({ loggedInUserNickname: getUser.data[0].nickName });
 
-                                _context3.next = 7;
+                                _context3.next = 8;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/meeting/" + this.props.meetingId);
 
-                            case 7:
+                            case 8:
                                 getCurrentMeetingInfo = _context3.sent;
                                 meetingLimit = getCurrentMeetingInfo.data[0].limit;
                                 usersIDs = [];
-                                _context3.next = 12;
+                                _context3.next = 13;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/matchUserWithMeetings");
 
-                            case 12:
+                            case 13:
                                 allMatches = _context3.sent;
                                 meetingMatched = 0;
 
@@ -34081,10 +34200,10 @@ var SingleMeetingDetails = function (_Component) {
                                 }());
 
                                 ResignedUsersIDs = [];
-                                _context3.next = 20;
+                                _context3.next = 21;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/deleteUserFromMeeting");
 
-                            case 20:
+                            case 21:
                                 allDeleted = _context3.sent;
 
 
@@ -34135,10 +34254,10 @@ var SingleMeetingDetails = function (_Component) {
                                     };
                                 }());
 
-                                _context3.next = 25;
+                                _context3.next = 26;
                                 return __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get("http://127.0.0.1:8000/api/comments?results=1");
 
-                            case 25:
+                            case 26:
                                 allComments = _context3.sent;
 
 
@@ -34161,7 +34280,7 @@ var SingleMeetingDetails = function (_Component) {
                                     }
                                 }
 
-                            case 27:
+                            case 28:
                             case "end":
                                 return _context3.stop();
                         }
@@ -34203,7 +34322,7 @@ var SingleMeetingDetails = function (_Component) {
                                     break;
                                 }
 
-                                alert("user with email " + this.state.loggedInUserEmail + " took part in the past!");
+                                this.props.showAlertWarning("user with email " + this.state.loggedInUserEmail + " took part in the past!");
                                 _context4.next = 20;
                                 break;
 
@@ -34246,15 +34365,15 @@ var SingleMeetingDetails = function (_Component) {
                                         displayResignBtn: true,
                                         displayCommentsContainer: true
                                     });
-                                    alert("You are saved to that meeting. Now you can write comments.");
+                                    this.props.showAlertSuccess("You are saved to that meeting. Now you can write comments.");
                                 } else {
-                                    alert("Troubles with adding user to tak part.");
+                                    this.props.showAlertWarning("Troubles with adding user to tak part.");
                                 }
                                 _context4.next = 20;
                                 break;
 
                             case 19:
-                                alert("Sorry we can't handle that. Please repeat for a while.");
+                                this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
 
                             case 20:
                             case "end":
@@ -34324,15 +34443,15 @@ var SingleMeetingDetails = function (_Component) {
 
                                 if (savedDeleteUserFromMeeting.status == "200") {
                                     window.location.reload();
-                                    alert("we are sad that you resigned.");
+                                    this.props.showAlertSuccess("we are sad that you resigned.");
                                 } else {
-                                    alert("Some problems occured with delete you from meeting.");
+                                    this.props.showAlertWarning("Some problems occured with delete you from meeting.");
                                 }
                                 _context5.next = 17;
                                 break;
 
                             case 16:
-                                alert("Some problems occured with delete you from meeting.");
+                                this.props.showAlertWarning("Some problems occured with delete you from meeting.");
 
                             case 17:
                                 i++;
@@ -34483,7 +34602,9 @@ var SingleMeetingDetails = function (_Component) {
                         loggedInUserEmail: this.state.loggedInUserEmail,
                         loggedInUserNickname: this.state.loggedInUserNickname,
                         meetingId: this.props.meetingId,
-                        addCommentToState: this.addCommentToState
+                        addCommentToState: this.addCommentToState,
+                        showAlertSuccess: this.props.showAlertSuccess,
+                        showAlertWarning: this.props.showAlertWarning
                     }) : ""
                 ),
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
@@ -34698,9 +34819,9 @@ var CommentForm = function (_Component) {
 
                                 if (savedComment.status == "200") {
                                     this.props.addCommentToState(this.state.loggedInUserNickname, commentDate, this.state.commentBody);
-                                    alert("You wrote a comment.");
+                                    this.props.showAlertSuccess("You wrote a comment.");
                                 } else {
-                                    alert("Sorry we can't handle that. Please repeat for a while.");
+                                    this.props.showAlertWarning("Sorry we can't handle that. Please repeat for a while.");
                                 }
 
                             case 10:

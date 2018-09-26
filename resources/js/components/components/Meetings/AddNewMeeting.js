@@ -30,9 +30,9 @@ class AddNewMeeting extends Component {
         event.preventDefault();
 
         if (this.state.limit == "Select") {
-            alert("Please choose the limit of users.");
+            this.props.showAlertWarning("Please choose the limit of users.");
         } else if (this.state.category == "Select") {
-            alert("Please choose the category.");
+            this.props.showAlertWarning("Please choose the category.");
         } else {
             const getUser = await axios.get(
                 `http://127.0.0.1:8000/api/user/${sessionStorage.getItem(
@@ -64,14 +64,16 @@ class AddNewMeeting extends Component {
                 );
 
                 if (savedMatchUserWithMeeting.status == "200") {
-                    alert("You added new meeting");
+                    this.props.showAlertSuccess("You added new meeting");
                 } else {
-                    alert(
+                    this.props.showAlertWarning(
                         "Sorry we can't handle that. Please repeat for a while."
                     );
                 }
             } else {
-                alert("Sorry we can't handle that. Please repeat for a while.");
+                this.props.showAlertWarning(
+                    "Sorry we can't handle that. Please repeat for a while."
+                );
             }
         }
     }

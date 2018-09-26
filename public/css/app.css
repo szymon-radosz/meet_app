@@ -156,6 +156,13 @@ input[type="color"]:focus,
   text-align: center;
 }
 
+.alert {
+  position: absolute;
+  top: 52px;
+  z-index: 10;
+  right: 0;
+}
+
 .App-logo {
   -webkit-animation: App-logo-spin infinite 20s linear;
           animation: App-logo-spin infinite 20s linear;

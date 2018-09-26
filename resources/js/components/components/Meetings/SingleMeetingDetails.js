@@ -32,6 +32,7 @@ class SingleMeetingDetails extends Component {
     }
 
     async componentDidMount() {
+        console.log(this.props.meetingId);
         const getUser = await axios.get(
             `http://127.0.0.1:8000/api/user/${sessionStorage.getItem("userId")}`
         );
@@ -169,7 +170,7 @@ class SingleMeetingDetails extends Component {
         }
 
         if (takePart === false) {
-            alert(
+            this.props.showAlertWarning(
                 "user with email " +
                     this.state.loggedInUserEmail +
                     " took part in the past!"
@@ -205,14 +206,18 @@ class SingleMeetingDetails extends Component {
                         displayResignBtn: true,
                         displayCommentsContainer: true
                     });
-                    alert(
+                    this.props.showAlertSuccess(
                         "You are saved to that meeting. Now you can write comments."
                     );
                 } else {
-                    alert("Troubles with adding user to tak part.");
+                    this.props.showAlertWarning(
+                        "Troubles with adding user to tak part."
+                    );
                 }
             } else {
-                alert("Sorry we can't handle that. Please repeat for a while.");
+                this.props.showAlertWarning(
+                    "Sorry we can't handle that. Please repeat for a while."
+                );
             }
         }
     }
@@ -252,14 +257,16 @@ class SingleMeetingDetails extends Component {
 
                     if (savedDeleteUserFromMeeting.status == "200") {
                         window.location.reload();
-                        alert("we are sad that you resigned.");
+                        this.props.showAlertSuccess(
+                            "we are sad that you resigned."
+                        );
                     } else {
-                        alert(
+                        this.props.showAlertWarning(
                             "Some problems occured with delete you from meeting."
                         );
                     }
                 } else {
-                    alert(
+                    this.props.showAlertWarning(
                         "Some problems occured with delete you from meeting."
                     );
                 }
@@ -362,6 +369,8 @@ class SingleMeetingDetails extends Component {
                             }
                             meetingId={this.props.meetingId}
                             addCommentToState={this.addCommentToState}
+                            showAlertSuccess={this.props.showAlertSuccess}
+                            showAlertWarning={this.props.showAlertWarning}
                         />
                     ) : (
                         ""

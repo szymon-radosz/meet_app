@@ -30,7 +30,9 @@ class Register extends Component {
         event.preventDefault();
 
         if (_.contains(this.state.nickName, " ")) {
-            alert("You can't use whitespace in your nickname");
+            this.props.showAlertWarning(
+                "You can't use whitespace in your nickname"
+            );
         } else {
             let uniqueEmail = true;
             let uniqueNickname = true;
@@ -51,13 +53,13 @@ class Register extends Component {
                 }
 
                 if (uniqueEmail === false) {
-                    alert(
+                    this.props.showAlertWarning(
                         "user with email " +
                             this.state.email +
                             " already exists"
                     );
                 } else if (uniqueNickname === false) {
-                    alert(
+                    this.props.showAlertWarning(
                         "user with nickname " +
                             this.state.nickName +
                             " already exists"
@@ -88,15 +90,19 @@ class Register extends Component {
                             savedUser.data.userNickName
                         );
                         this.props.loginUser(savedUser.data.userNickName);
-                        alert("Thank you. You created an account");
+                        this.props.showAlertSuccess(
+                            "Thank you. You created an account"
+                        );
                     } else {
-                        alert(
+                        this.props.showAlertWarning(
                             "Sorry we can't handle that. Please repeat for a while."
                         );
                     }
                 }
             } else {
-                alert("Sorry password and confirmation doesn't match ");
+                this.props.showAlertWarning(
+                    "Sorry password and confirmation doesn't match "
+                );
             }
         }
     }

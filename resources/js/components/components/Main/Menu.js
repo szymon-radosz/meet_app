@@ -53,7 +53,7 @@ class Menu extends Component {
     logout() {
         sessionStorage.setItem("userId", "");
         sessionStorage.setItem("userNickName", "");
-        alert("You're sucessfully logout");
+        this.props.showAlertSuccess("You're sucessfully logout");
         this.setState({ userIsLoggedIn: false });
         this.setState({ loggedInUserNickName: "" });
     }
@@ -220,14 +220,34 @@ class Menu extends Component {
                         exact
                         path="/login"
                         render={() => {
-                            return <Login loginUser={this.loginUser} />;
+                            return (
+                                <Login
+                                    loginUser={this.loginUser}
+                                    showAlertSuccess={
+                                        this.props.showAlertSuccess
+                                    }
+                                    showAlertWarning={
+                                        this.props.showAlertWarning
+                                    }
+                                />
+                            );
                         }}
                     />
                     <Route
                         exact
                         path="/register"
                         render={() => {
-                            return <Register loginUser={this.loginUser} />;
+                            return (
+                                <Register
+                                    loginUser={this.loginUser}
+                                    showAlertSuccess={
+                                        this.props.showAlertSuccess
+                                    }
+                                    showAlertWarning={
+                                        this.props.showAlertWarning
+                                    }
+                                />
+                            );
                         }}
                     />
 
@@ -244,9 +264,42 @@ class Menu extends Component {
                             );
                         }}
                     />
-                    <Route path="/meeting/:id" component={MeetingDetails} />
+
+                    <Route
+                        exact
+                        path="/meeting/:id"
+                        render={props => {
+                            return (
+                                <MeetingDetails
+                                    {...props}
+                                    showAlertSuccess={
+                                        this.props.showAlertSuccess
+                                    }
+                                    showAlertWarning={
+                                        this.props.showAlertWarning
+                                    }
+                                />
+                            );
+                        }}
+                    />
                     <Route path="/profile/:nickname" component={MainProfile} />
-                    <Route path="/add-meeting" component={AddNewMeeting} />
+
+                    <Route
+                        exact
+                        path="/add-meeting"
+                        render={() => {
+                            return (
+                                <AddNewMeeting
+                                    showAlertSuccess={
+                                        this.props.showAlertSuccess
+                                    }
+                                    showAlertWarning={
+                                        this.props.showAlertWarning
+                                    }
+                                />
+                            );
+                        }}
+                    />
                 </div>
             </Router>
         );

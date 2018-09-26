@@ -70,9 +70,11 @@ class CommentForm extends Component {
                 commentDate,
                 this.state.commentBody
             );
-            alert("You wrote a comment.");
+            this.props.showAlertSuccess("You wrote a comment.");
         } else {
-            alert("Sorry we can't handle that. Please repeat for a while.");
+            this.props.showAlertWarning(
+                "Sorry we can't handle that. Please repeat for a while."
+            );
         }
     }
 

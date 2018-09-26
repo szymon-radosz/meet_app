@@ -59,6 +59,8 @@ class MeetingDetails extends Component {
                             date={item.date}
                             time={item.time}
                             meetingId={this.state.meetingID}
+                            showAlertSuccess={this.props.showAlertSuccess}
+                            showAlertWarning={this.props.showAlertWarning}
                         />
                     );
                 })}
