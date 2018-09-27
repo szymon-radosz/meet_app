@@ -18,10 +18,11 @@ class UserController extends Controller
 
     public function login(Request $request){
         $nickName = $request->input('emailOrNickname');
+        $password = $request->input('password');
 
-        $user = DB::table('users')->where('nickName', $nickName)->first();
+        $user = DB::table('users')->where('nickName', $nickName)->orWhere('email', $nickName)->where('password', $password)->first();
 
-        if($user->password == $request->input('password')){
+        if($user){
             $userId = $user->id;
             $userNickName = $user->nickName;
         }else{

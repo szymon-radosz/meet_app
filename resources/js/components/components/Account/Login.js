@@ -28,7 +28,9 @@ class Login extends Component {
             password: this.state.password
         });
 
-        if (loginUser.status == 200 && loginUser.data != null) {
+        console.log(loginUser);
+
+        if (loginUser.status == 200 && loginUser.data.userId != null) {
             sessionStorage.setItem("userId", "");
             sessionStorage.setItem("userNickName", "");
             sessionStorage.setItem("userId", loginUser.data.userId);

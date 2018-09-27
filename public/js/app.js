@@ -31098,7 +31098,9 @@ var Login = function (_Component) {
                                 loginUser = _context.sent;
 
 
-                                if (loginUser.status == 200 && loginUser.data != null) {
+                                console.log(loginUser);
+
+                                if (loginUser.status == 200 && loginUser.data.userId != null) {
                                     sessionStorage.setItem("userId", "");
                                     sessionStorage.setItem("userNickName", "");
                                     sessionStorage.setItem("userId", loginUser.data.userId);
@@ -31109,7 +31111,7 @@ var Login = function (_Component) {
                                     this.props.showAlertWarning("wrong password for that account");
                                 }
 
-                            case 5:
+                            case 6:
                             case "end":
                                 return _context.stop();
                         }
